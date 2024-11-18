@@ -1,92 +1,56 @@
-.input {
+/* From Uiverse.io by Allyhere */ 
+.input-container {
+  --c-text: rgb(50, 50, 80);
+  --c-bg: rgb(252, 252, 252);
+  --c-outline: rgb(55, 45 , 190);
+  display: grid;
+  gap: 1ch;
+  position: relative;
   width: 100%;
-  height: 44px;
-  background-color: #05060f0a;
-  border-radius: .5rem;
-  padding: 0 1rem;
-  border: 2px solid transparent;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: black;
+}
+
+.input-field {
+  padding: 0.5em 0.75em;
+  border-radius: 0.2em;
+  border: 1px solid var(--c-border, currentColor);
+  color: var(--c-text);
   font-size: 1rem;
-  transition: border-color .3s cubic-bezier(.25,.01,.25,1) 0s, color .3s cubic-bezier(.25,.01,.25,1) 0s,background .2s cubic-bezier(.25,.01,.25,1) 0s;
+  letter-spacing: 0.1ch;
+  width: 100%;
 }
 
-.label {
-  display: block;
-  margin-bottom: .3rem;
-  font-size: .9rem;
-  font-weight: bold;
-  color: #05060f99;
-  transition: color .3s cubic-bezier(.25,.01,.25,1) 0s;
-}
-
-.input:hover, .input:focus, .input-group:hover .input {
-  outline: none;
-  border-color: #05060f;
-}
-
-.input-group:hover .label, .input:focus {
-  color: #05060fc2;
-}
-
-.checkbox {
-  position: relative;
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 20px;
-}
-
-.checkbox input[type="checkbox"] {
-  position: absolute;
-  opacity: 0;
-}
-
-.checkbox-circle {
-  position: relative;
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 2px solid #aaa;
-  transition: all 0.3s;
-}
-
-.checkbox input[type="checkbox"]:checked ~ .checkbox-circle {
-  background: #4CAF50;
-  border-color: #4CAF50;
-}
-
-.checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  fill: none;
-  stroke: #fff;
-  stroke-width: 3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  opacity: 0;
-  transition: all 0.3s;
-}
-
-.checkbox input[type="checkbox"]:checked ~ .checkbox-circle .checkmark {
+.input-field:not(:placeholder-shown) + .input-label {
+  transform: translateY(-220%);
   opacity: 1;
 }
 
-.checkmark-circle {
-  stroke-dasharray: 166;
-  stroke-dashoffset: 166;
-  transition: stroke-dashoffset 0.3s;
+.input-field:invalid {
+  --c-border: rgb(230, 85, 60);
+  --c-text: rgb(230, 85, 60);
+  --c-outline: rgb(230, 85, 60);
 }
 
-.checkbox input[type="checkbox"]:checked ~ .checkbox-circle .checkmark-circle {
-  stroke-dashoffset: 0;
+.input-field:is(:disabled, :read-only) {
+  --c-border: rgb(150, 150, 150);
+  --c-text: rgb(170, 170, 170);
 }
 
-.checkmark-kick {
-  stroke-dasharray: 50;
-  stroke-dashoffset: 50;
-  transition: stroke-dashoffset 0.3s;
+.input-field:is(:focus, :focus-visible) {
+  outline: 2px solid var(--c-outline);
+  outline-offset: 2px;
 }
 
-.checkbox input[type="checkbox"]:checked ~ .checkbox-circle .checkmark-kick {
-  stroke-dashoffset: 0;
+.input-label {
+  --timing: 200ms ease-in;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transition: transform var(--timing),
+    opacity var(--timing);
+  transform: translateY(-50%);
+  opacity: 0;
+  color: var(--c-text);
+  font-weight: 500;
 }

@@ -61,7 +61,14 @@ function App() {
   }
 
   return (
-    <div className="m-10 flex flex-col gap-3">
+    <div className="mx-10 my-14 flex flex-col gap-3">
+      <div>
+        <p className="input-container">
+            <input disabled={getSelectedPersonsCount()===0} readOnly={loading} autoFocus onKeyUp={onkeyup} onChange={e=>setQuestion(e.target.value)}
+                   type="text" placeholder="Gib hier deine Frage ein" name="text" id="text" className="input-field"/>
+            <label className="input-label">Deine Frage:</label>
+        </p>
+      </div>
       <div>Stelle deine Frage an</div>
       {Object.keys(availablePersons).map((key) => (
           <div key={key}>
@@ -72,9 +79,6 @@ function App() {
           </div>
         )
       )}
-      <div>
-        <input disabled={getSelectedPersonsCount()===0} readOnly={loading} autoFocus name="Question" id="question" value={question} className="input" type="email" size={60} onKeyUp={onkeyup} onChange={e=>setQuestion(e.target.value)}/>
-      </div>
       {responseTitle.length > 0 && <div className="font-bold">Frage:</div>}
       <div>
         {responseTitle}
