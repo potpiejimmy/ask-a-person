@@ -18,7 +18,7 @@ function App() {
       setResponseContent("...");
       setQuestion("");
 
-      let response = await api.ask(question);
+      let response = await api.ask("habeck", question);
       setResponseContent(response.answer);
       setLoading(false);
     }
