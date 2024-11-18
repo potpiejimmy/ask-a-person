@@ -1,5 +1,5 @@
-/* From Uiverse.io by alexruix */ 
 .input {
+  width: 100%;
   height: 44px;
   background-color: #05060f0a;
   border-radius: .5rem;
@@ -25,4 +25,68 @@
 
 .input-group:hover .label, .input:focus {
   color: #05060fc2;
+}
+
+.checkbox {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 20px;
+}
+
+.checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+}
+
+.checkbox-circle {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid #aaa;
+  transition: all 0.3s;
+}
+
+.checkbox input[type="checkbox"]:checked ~ .checkbox-circle {
+  background: #4CAF50;
+  border-color: #4CAF50;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+.checkbox input[type="checkbox"]:checked ~ .checkbox-circle .checkmark {
+  opacity: 1;
+}
+
+.checkmark-circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  transition: stroke-dashoffset 0.3s;
+}
+
+.checkbox input[type="checkbox"]:checked ~ .checkbox-circle .checkmark-circle {
+  stroke-dashoffset: 0;
+}
+
+.checkmark-kick {
+  stroke-dasharray: 50;
+  stroke-dashoffset: 50;
+  transition: stroke-dashoffset 0.3s;
+}
+
+.checkbox input[type="checkbox"]:checked ~ .checkbox-circle .checkmark-kick {
+  stroke-dashoffset: 0;
 }

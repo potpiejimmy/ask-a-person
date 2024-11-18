@@ -1,44 +1,93 @@
 import React from 'react';
 import AskAPi from './api/AskApi';
 import './App.css';
+import { Checkbox } from './components/Checkbox';
+import { GoInfo } from "react-icons/go";
 
 function App() {
+
+  const availablePersons: { [key: string]: { name: string; info: string } } = {
+    habeck: {
+      name: "Robert Habeck",
+      info: "https://www.gruene.de/leute/robert-habeck"
+    },
+    weidel: {
+      name: "Alice Weidel",
+      info: "https://www.afd.de/alice-weidel"
+    }
+  }
+
+  const personSelectionDef: { [key: string]: boolean } = {
+    habeck: true,
+    weidel: false
+  }
 
   const [question, setQuestion] = React.useState<string>("");
   const [loading, setLoading] = React.useState<boolean>(false);
   const [responseTitle, setResponseTitle] = React.useState<string>("");
-  const [responseContent, setResponseContent] = React.useState<string>("");
+  const [responseContents, setResponseContents] = React.useState<any[]>([]);
+  const [personSelection, setPersonSelection] = React.useState(personSelectionDef);
 
   let api = new AskAPi();
 
   async function onkeyup(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.key === 'Enter') {
       setLoading(true);
-      setResponseTitle(question);
-      setResponseContent("...");
       setQuestion("");
 
-      let response = await api.ask("habeck", question);
-      setResponseContent(response.answer);
+      let responses: { key: string; response: Promise<any> }[] = [];
+
+      Object.keys(personSelection).forEach(async key => {
+        if (personSelection[key]) {
+          responses.push({
+            key: key,
+            response: api.ask(key, question)
+          })
+        }
+      });
+
+      setResponseTitle(question);
+      setResponseContents(responses.map(r => { return { key: r.key, response: "..." }}));
+
+      let answers = await Promise.all(responses.map(r => r.response));
+
+      setResponseContents(answers.map((answer,index) => { return { key: responses[index].key, response: answer.answer }}));
       setLoading(false);
     }
   }
 
+  function getSelectedPersonsCount(): number {
+    return Object.keys(personSelection).filter(key => personSelection[key]).length;
+  }
+
   return (
     <div className="m-10 flex flex-col gap-3">
+      <div>Stelle deine Frage an</div>
+      {Object.keys(availablePersons).map((key) => (
+          <div key={key}>
+            <div className='flex flex-row items-center'>
+              <Checkbox id={key} label={availablePersons[key].name} checked={personSelection[key]} onChange={checked => setPersonSelection({...personSelection, [key]: checked})}/>
+              <a href={availablePersons[key].info}><GoInfo/></a>
+            </div>
+          </div>
+        )
+      )}
       <div>
-        Frag <a href="https://www.gruene.de/ueber-uns/robert-habeck">Robert Habeck</a>:
-      </div>
-      <div>
-        <input readOnly={loading} autoFocus name="Question" id="question" value={question} className="input" type="email" size={60} onKeyUp={onkeyup} onChange={e=>setQuestion(e.target.value)}/>
+        <input disabled={getSelectedPersonsCount()===0} readOnly={loading} autoFocus name="Question" id="question" value={question} className="input" type="email" size={60} onKeyUp={onkeyup} onChange={e=>setQuestion(e.target.value)}/>
       </div>
       {responseTitle.length > 0 && <div className="font-bold">Frage:</div>}
       <div>
         {responseTitle}
       </div>
-      {responseContent.length > 0 && <div className="font-bold">Antwort:</div>}
-      <div className="whitespace-pre-line">
-        {responseContent}
+        <div className="flex flex-row gap-3">
+          {responseContents.length > 0 && responseContents.map((content, index) => (
+            <div key={index} className="grow basis-0 flex flex-col gap-3">
+              <div className="font-bold">{availablePersons[content.key].name}</div>
+              <div className="whitespace-pre-line">
+                {content.response}
+              </div>
+            </div>
+        ))}
       </div>
     </div>
   );
