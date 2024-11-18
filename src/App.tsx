@@ -3,6 +3,8 @@ import AskAPi from './api/AskApi';
 import './App.css';
 import { Checkbox } from './components/Checkbox';
 import { GoInfo } from "react-icons/go";
+import { FaRegCheckCircle } from "react-icons/fa";
+import { BiNoEntry } from "react-icons/bi";
 
 function App() {
 
@@ -18,79 +20,112 @@ function App() {
   }
 
   const personSelectionDef: { [key: string]: boolean } = {
-    habeck: true,
+    habeck: false,
     weidel: false
   }
 
   const [question, setQuestion] = React.useState<string>("");
   const [loading, setLoading] = React.useState<boolean>(false);
   const [responseTitle, setResponseTitle] = React.useState<string>("");
-  const [responseContents, setResponseContents] = React.useState<any[]>([]);
+  const [responseContents, setResponseContents] = React.useState<any>({});
   const [personSelection, setPersonSelection] = React.useState(personSelectionDef);
+  const [checkResult, setCheckResult] = React.useState<string>("");
 
   let api = new AskAPi();
 
+  async function checkQuestion() {
+    setLoading(true);
+    setCheckResult("");
+    setResponseTitle("");
+    setResponseContents({});
+    setPersonSelection(personSelectionDef);
+    let res = await api.ask("checkbot", question);
+    if (res.answer === 'Ja') {
+      setQuestion("");
+      setResponseTitle(question);
+    }
+    setCheckResult(res.answer);
+    setLoading(false);
+  }
+
   async function onkeyup(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.key === 'Enter') {
-      setLoading(true);
-      setQuestion("");
-
-      let responses: { key: string; response: Promise<any> }[] = [];
-
-      Object.keys(personSelection).forEach(async key => {
-        if (personSelection[key]) {
-          responses.push({
-            key: key,
-            response: api.ask(key, question)
-          })
-        }
-      });
-
-      setResponseTitle(question);
-      setResponseContents(responses.map(r => { return { key: r.key, response: "..." }}));
-
-      let answers = await Promise.all(responses.map(r => r.response));
-
-      setResponseContents(answers.map((answer,index) => { return { key: responses[index].key, response: answer.answer }}));
-      setLoading(false);
+      checkQuestion();
     }
   }
 
-  function getSelectedPersonsCount(): number {
-    return Object.keys(personSelection).filter(key => personSelection[key]).length;
+  function isQuestionValid() {
+    return checkResult === 'Ja';
+  }
+
+  async function performQuestion(person: string) {
+      setLoading(true);
+
+      setResponseContents({
+        ...responseContents,
+        [person]: {answer: "..."}
+      });
+
+      let response = await api.ask(person, responseTitle)
+
+      setResponseContents({
+        ...responseContents,
+        [person]: response
+      });
+
+      setLoading(false);
+  }
+
+  async function personSelected(key: string, checked: boolean) {
+    setPersonSelection({...personSelection, [key]: checked});
+    if (checked) {
+      performQuestion(key);
+    } else {
+      delete responseContents[key];
+      setResponseContents(responseContents);
+    }
   }
 
   return (
     <div className="mx-10 my-14 flex flex-col gap-3">
       <div>
         <p className="input-container">
-            <input disabled={getSelectedPersonsCount()===0} readOnly={loading} autoFocus onKeyUp={onkeyup} onChange={e=>setQuestion(e.target.value)}
+            <input readOnly={loading} autoFocus onKeyUp={onkeyup} value={question} onChange={e=>setQuestion(e.target.value)}
                    type="text" placeholder="Gib hier deine Frage ein" name="text" id="text" className="input-field"/>
             <label className="input-label">Deine Frage:</label>
         </p>
       </div>
-      <div>Stelle deine Frage an</div>
-      {Object.keys(availablePersons).map((key) => (
-          <div key={key}>
-            <div className='flex flex-row items-center'>
-              <Checkbox id={key} label={availablePersons[key].name} checked={personSelection[key]} onChange={checked => setPersonSelection({...personSelection, [key]: checked})}/>
-              <a href={availablePersons[key].info}><GoInfo/></a>
-            </div>
-          </div>
-        )
-      )}
+      {checkResult &&
+        <div>
+          Fragen-Check: {isQuestionValid() ? <FaRegCheckCircle size={40}/> : <BiNoEntry size={40}/>}
+        </div>
+      }
       {responseTitle.length > 0 && <div className="font-bold">Frage:</div>}
       <div>
         {responseTitle}
       </div>
-        <div className="flex flex-row gap-3">
-          {responseContents.length > 0 && responseContents.map((content, index) => (
-            <div key={index} className="grow basis-0 flex flex-col gap-3">
-              <div className="font-bold">{availablePersons[content.key].name}</div>
-              <div className="whitespace-pre-line">
-                {content.response}
+      {isQuestionValid() &&
+        <div className="flex flex-col gap-3">
+          <div>Stelle diese Frage an</div>
+          {Object.keys(availablePersons).map((key) => (
+              <div key={key}>
+                <div className='flex flex-row items-center'>
+                  <Checkbox id={key} disabled={!isQuestionValid() || loading} label={availablePersons[key].name} checked={personSelection[key]} onChange={checked => personSelected(key, checked)}/>
+                  <a href={availablePersons[key].info}><GoInfo/></a>
+                </div>
               </div>
+            )
+          )}
+        </div>
+      }
+      <div className="flex flex-row gap-3">
+        {Object.keys(responseContents).map((key) => (
+          <div key={key} className="grow basis-0 flex flex-col gap-3">
+            <div className="font-bold">{availablePersons[key].name}</div>
+            <div className="whitespace-pre-line">
+              {responseContents[key].answer}
             </div>
+          </div>
         ))}
       </div>
     </div>

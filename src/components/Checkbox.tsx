@@ -3,6 +3,7 @@ import "./Checkbox.css";
 interface CheckboxProps {
     id: string;
     label: string;
+    disabled: boolean;
     checked: boolean;
     onChange: (checked: boolean) => void;
 }
@@ -12,7 +13,7 @@ export function Checkbox(props: CheckboxProps) {
     return (
         <label className="checkbox">
             <div className="flex flex-row gap-3 items-center">
-                <input type="checkbox" checked={props.checked} onChange={() => props.onChange(!props.checked)}/>
+                <input type="checkbox" disabled={props.disabled} checked={props.checked} onChange={() => props.onChange(!props.checked)}/>
                 <div className="checkbox-circle">
                     <svg viewBox="0 0 52 52" className="checkmark">
                         <circle fill="none" r="25" cy="26" cx="26" className="checkmark-circle"></circle>
