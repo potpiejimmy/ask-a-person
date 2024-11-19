@@ -67,8 +67,9 @@ function App() {
     setLoading(false);
   }
 
-  async function onkeyup(event: React.KeyboardEvent<HTMLInputElement>) {
+  async function onkeydown(event: React.KeyboardEvent<HTMLTextAreaElement>) {
     if (event.key === 'Enter') {
+      event.preventDefault();
       checkQuestion();
     }
   }
@@ -126,8 +127,8 @@ function App() {
       </div>
       <div className="flex flex-row gap-3 items-center">
         <p className="grow input-container">
-          <input readOnly={loading} autoFocus onKeyUp={onkeyup} value={question} onChange={e=>setQuestion(e.target.value)}
-                 type="text" name="text" id="question" className="input" placeholder="Gib hier deine Frage ein"></input>
+          <textarea readOnly={loading} autoFocus onKeyDown={onkeydown} value={question} onChange={e=>setQuestion(e.target.value)}
+                 name="text" id="question" className="input" placeholder="Gib hier deine Frage ein"></textarea>
         </p>
         <div>
           {loading ? <IoHourglassOutline size={40}/> : (isQuestionValid() ? <FaRegCheckCircle size={40}/> : <BiNoEntry size={40}/>)}

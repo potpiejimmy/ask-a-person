@@ -5,15 +5,16 @@
   padding: 1rem;
   border-radius: 1rem;
   background: #e8e8e8;
-  box-shadow: 20px 20px 60px #c5c5c5,
+  box-shadow: 20px 20px 60px #e5e5e5,
      -20px -20px 60px #ffffff;
   transition: 0.3s;
+  field-sizing: content;
  }
  
  .input:focus {
   outline-color: #e8e8e8;
   background: #e8e8e8;
-  box-shadow: inset 20px 20px 60px #c5c5c5,
+  box-shadow: inset 20px 20px 60px #e5e5e5,
      inset -20px -20px 60px #ffffff;
   transition: 0.3s;
  }
