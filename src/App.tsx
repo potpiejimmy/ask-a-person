@@ -145,7 +145,7 @@ function App() {
       {checkResult.length > 0 && !loading && !isQuestionValid() && <div className="text-red-700">Die eingegebene Frage ist leider nicht gültig.</div>}
       {warningMessage.length>0 && <div className="text-red-700">{warningMessage}</div>}
 
-      <div className='text-lg'>Wähle aus, an wen du die Frage stellen möchtest:</div>
+      <div className='text-lg'>Wähle aus, an wen du die Frage stellen möchtest. Du kannst mehrere Politiker auswählen und dann die Antworten vergleichen:</div>
       <div className="flex flex-row gap-3 flex-wrap">
         {Object.keys(availablePersons).map((key) => (
           <div key={key} className='grow basis-0 min-w-40'>
