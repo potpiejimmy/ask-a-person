@@ -55,6 +55,7 @@ function App() {
   let api = new AskAPi();
 
   async function checkQuestion() {
+    if (question.trim().length === 0) return;
     setLoading(true);
     setCheckResult("");
     let res = await api.ask("checkbot", question);
@@ -134,6 +135,8 @@ function App() {
           {loading ? <IoHourglassOutline size={40}/> : (isQuestionValid() ? <FaRegCheckCircle size={40}/> : <BiNoEntry size={40}/>)}
         </div>
       </div>
+      {checkResult.length > 0 && !loading && !isQuestionValid() && <div className="text-red-700">Die eingegebene Frage ist leider nicht gültig.</div>}
+
       {acceptedQuestion.length > 0 && <div className="font-bold">Frage:</div>}
       <div className='text-2xl'>
         {acceptedQuestion}
