@@ -100,7 +100,7 @@ function App() {
   async function personSelected(key: string, checked: boolean) {
     let loading = false;
     if (checked) {
-      if (isQuestionValid()) {
+      if (acceptedQuestion.length > 0) {
         loading = true;
         performQuestion(key, acceptedQuestion);
       } else {
@@ -114,7 +114,7 @@ function App() {
   return (
     <div className="m-10 flex flex-col gap-5">
       <div>Stelle deine Frage an</div>
-      <div className="flex flex-row gap-3">
+      <div className="flex flex-row gap-3 flex-wrap">
         {Object.keys(availablePersons).map((key) => (
           <div key={key}>
             <div className='flex flex-row items-center'>
