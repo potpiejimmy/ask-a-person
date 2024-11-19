@@ -11,7 +11,7 @@ interface PersonContext {
   response: string;
 }
 
-const DUMMY_RESPONSES = true;
+const DUMMY_RESPONSES = false;
 
 function App() {
 
