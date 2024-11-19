@@ -13,7 +13,7 @@ export default function Disclaimer(props: DisclaimerProps) {
                 <div className="text-content">
                     <p className="alertcard-heading">Achtung, Prototyp</p>
                     <p className="alertcard-content">
-                    Diese Website dient nur zu Demonstrationszwecken. Alle dargestellten Inhalte und Personen sind frei erfunden.
+                    Diese Website dient nur zu Demonstrationszwecken. Die dargestellten Inhalte basieren auf Interpretationen von ChatGPT auf Basis von aktuellen Zitaten, Interviews und Bundestagsreden. Die Antworten können von den realen Meinungen der Politiker abweichen.
                     </p>
                     {/*<a href="#" className="alertcard-link">Mehr Infos</a>*/}
                     <button className="exit-btn" onClick={()=>props.onClick()}>

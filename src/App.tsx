@@ -2,8 +2,6 @@ import React from 'react';
 import AskAPi from './api/AskApi';
 import './App.css';
 import { Checkbox } from './components/Checkbox';
-import { FaRegCheckCircle } from "react-icons/fa";
-import { BiNoEntry } from "react-icons/bi";
 import { IoHourglassOutline } from "react-icons/io5";
 import Disclaimer from './components/Disclaimer';
 
@@ -13,7 +11,7 @@ interface PersonContext {
   response: string;
 }
 
-const DUMMY_RESPONSES = false;
+const DUMMY_RESPONSES = true;
 
 function App() {
 
@@ -141,9 +139,7 @@ function App() {
           <textarea readOnly={loading} autoFocus onKeyDown={onkeydown} value={question} onChange={e=>setQuestion(e.target.value)}
                  name="text" id="question" className="input" placeholder="Gib hier deine Frage ein"></textarea>
         </p>
-        <div>
-          {loading ? <IoHourglassOutline size={40}/> : (isQuestionValid() ? <FaRegCheckCircle size={40} color='green'/> : <BiNoEntry size={40} color='red'/>)}
-        </div>
+        {loading && <IoHourglassOutline size={40}/>}
       </div>
 
       {checkResult.length > 0 && !loading && !isQuestionValid() && <div className="text-red-700">Die eingegebene Frage ist leider nicht gültig.</div>}
