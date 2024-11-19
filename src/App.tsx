@@ -5,6 +5,7 @@ import { Checkbox } from './components/Checkbox';
 import { FaRegCheckCircle } from "react-icons/fa";
 import { BiNoEntry } from "react-icons/bi";
 import { IoHourglassOutline } from "react-icons/io5";
+import Disclaimer from './components/Disclaimer';
 
 interface PersonContext {
   checked: boolean;
@@ -52,6 +53,7 @@ function App() {
   [personContext["scholz"], setPersonContext["scholz"]] = React.useState<PersonContext>(personContextDefault);
   [personContext["merz"], setPersonContext["merz"]] = React.useState<PersonContext>(personContextDefault);
 
+  const [disclaimerDismissed, setDisclaimerDismissed] = React.useState<boolean>(false);
   const [question, setQuestion] = React.useState<string>("");
   const [loading, setLoading] = React.useState<boolean>(false);
   const [warningMessage, setWarningMessage] = React.useState<string>("");
@@ -128,6 +130,11 @@ function App() {
 
   return (
     <div className="m-5 sm:m-10 flex flex-col gap-5">
+
+      {DUMMY_RESPONSES && <div className="text-red-700">Dummy responses are enabled</div>}
+
+      {!disclaimerDismissed && <Disclaimer onClick={()=>setDisclaimerDismissed(true)}/>}
+
       <div className='text-xl'>Bald sind Wahlen in Deutschland! Informiere dich jetzt und stelle deine Fragen an die Kandidaten der Parteien:</div>
       <div className="flex flex-row gap-3 items-center">
         <p className="grow input-container">

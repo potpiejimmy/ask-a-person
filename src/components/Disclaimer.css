@@ -1,0 +1,64 @@
+.alertcard {
+    height: fit-content;
+    background: #fff0d1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.text-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 18px;
+    gap: 3px;
+}
+
+.alertcard-heading {
+    font-size: 1em;
+    font-weight: 800;
+}
+
+.alertcard-content {
+    font-size: 0.95em;
+    font-weight: 500;
+    color: rgb(49, 49, 49);
+}
+
+.alertcard-link {
+    color: black;
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+.exit-btn {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    right: 8px;
+    top: 8px;
+    cursor: pointer;
+}
+
+.exit-btn svg {
+    width: 12px;
+}
+
+.exit-btn:hover {
+    background-color: #eadaba;
+}
+
+.alertcardOuter {
+    content: "";
+    background-color: #ffb700;
+    padding: 4px;
+
+    transition: all 0.3s;
+}
