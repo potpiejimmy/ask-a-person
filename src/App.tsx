@@ -12,7 +12,7 @@ interface PersonContext {
   response: string;
 }
 
-const DUMMY_RESPONSES = false;
+const DUMMY_RESPONSES = true;
 
 function App() {
 
@@ -103,15 +103,11 @@ function App() {
   }
 
   async function performQuestion(person: string, question: string) {
-      setLoading(true);
-
       setPersonContext[person]({checked: true, loading: true, response: "..."});
 
       let response = await api.ask(DUMMY_RESPONSES ? "dummy" : person, question);
 
       setPersonContext[person]({checked: true, loading: false, response: response.answer});
-
-      setLoading(false);
   }
 
   async function personSelected(key: string, checked: boolean) {
@@ -132,14 +128,14 @@ function App() {
 
   return (
     <div className="m-5 sm:m-10 flex flex-col gap-5">
-      <div className='text-xl'>Bald sind Wahlen! Informiere dich jetzt und stelle Fragen an die Kandidaten der Parteien:</div>
+      <div className='text-xl'>Bald sind Wahlen in Deutschland! Informiere dich jetzt und stelle deine Fragen an die Kandidaten der Parteien:</div>
       <div className="flex flex-row gap-3 items-center">
         <p className="grow input-container">
           <textarea readOnly={loading} autoFocus onKeyDown={onkeydown} value={question} onChange={e=>setQuestion(e.target.value)}
                  name="text" id="question" className="input" placeholder="Gib hier deine Frage ein"></textarea>
         </p>
         <div>
-          {loading ? <IoHourglassOutline size={40}/> : (isQuestionValid() ? <FaRegCheckCircle size={40}/> : <BiNoEntry size={40}/>)}
+          {loading ? <IoHourglassOutline size={40}/> : (isQuestionValid() ? <FaRegCheckCircle size={40} color='green'/> : <BiNoEntry size={40} color='red'/>)}
         </div>
       </div>
 
