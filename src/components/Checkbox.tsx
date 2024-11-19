@@ -1,8 +1,10 @@
 import "./Checkbox.css";
+import { GoInfo } from "react-icons/go";
 
 interface CheckboxProps {
     id: string;
     label: string;
+    info: string;
     disabled: boolean;
     checked: boolean;
     onChange: (checked: boolean) => void;
@@ -11,17 +13,20 @@ interface CheckboxProps {
 export function Checkbox(props: CheckboxProps) {
 
     return (
-        <label className="checkbox">
-            <div className="flex flex-row gap-3 items-center">
-                <input type="checkbox" disabled={props.disabled} checked={props.checked} onChange={() => props.onChange(!props.checked)}/>
-                <div className="checkbox-circle">
-                    <svg viewBox="0 0 52 52" className="checkmark">
-                        <circle fill="none" r="25" cy="26" cx="26" className="checkmark-circle"></circle>
-                        <path d="M16 26l9.2 8.4 17.4-21.4" className="checkmark-kick"></path>
-                    </svg>
+        <div className={props.checked ? ' card-selected' : 'card-unselected'} onClick={() => {if (!props.disabled) props.onChange(!props.checked);}}>
+            <div className="card">
+                <div className="flex flex-col gap-3 items-end">
+                    <a href={props.info} target="_blank" rel="noreferrer"><GoInfo/></a>
+                    <div className="flex flex-col gap-3 items-center">
+                        <div>
+                            <img src={'/persons/' + props.id + '.jpg'} alt={props.label} className="rounded-full w-20 h-20"/>
+                        </div>
+                        <div>
+                            {props.label}
+                        </div>
+                    </div>
                 </div>
-                <div>{props.label}</div>
             </div>
-        </label>
+        </div>
     );
 }

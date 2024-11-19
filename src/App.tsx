@@ -2,7 +2,6 @@ import React from 'react';
 import AskAPi from './api/AskApi';
 import './App.css';
 import { Checkbox } from './components/Checkbox';
-import { GoInfo } from "react-icons/go";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { BiNoEntry } from "react-icons/bi";
 import { IoHourglassOutline } from "react-icons/io5";
@@ -12,6 +11,8 @@ interface PersonContext {
   loading: boolean;
   response: string;
 }
+
+const DUMMY_RESPONSES = false;
 
 function App() {
 
@@ -49,16 +50,26 @@ function App() {
 
   const [question, setQuestion] = React.useState<string>("");
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [warningMessage, setWarningMessage] = React.useState<string>("");
   const [acceptedQuestion, setAcceptedQuestion] = React.useState<string>("");
   const [checkResult, setCheckResult] = React.useState<string>("");
 
   let api = new AskAPi();
 
+  async function askCheckBot(question: string): Promise<{answer: string}> {
+    if (DUMMY_RESPONSES) {
+      return new Promise(resolve => setTimeout(() => resolve({answer: question.length>2 ? 'Ja' : "Nein"}), 1000));
+    } else {
+      return api.ask("checkbot", question);
+    }
+  }
+
   async function checkQuestion() {
     if (question.trim().length === 0) return;
     setLoading(true);
+    setWarningMessage("");
     setCheckResult("");
-    let res = await api.ask("checkbot", question);
+    let res = await askCheckBot(question);
     if (res.answer === 'Ja') {
       setQuestion("");
       setAcceptedQuestion(question);
@@ -92,7 +103,7 @@ function App() {
 
       setPersonContext[person]({checked: true, loading: true, response: "..."});
 
-      let response = await api.ask(person/*"dummy"*/, question)
+      let response = await api.ask(DUMMY_RESPONSES ? "dummy" : person, question);
 
       setPersonContext[person]({checked: true, loading: false, response: response.answer});
 
@@ -100,13 +111,15 @@ function App() {
   }
 
   async function personSelected(key: string, checked: boolean) {
-    let loading = false;
     if (checked) {
       if (acceptedQuestion.length > 0) {
-        loading = true;
         performQuestion(key, acceptedQuestion);
       } else {
-        setPersonContext[key]({checked: true, loading: false, response: ""});
+        if (acceptedQuestion.length === 0 && question.trim().length > 0) {
+          setWarningMessage("Bitte drücke Enter auf dem Eingabefeld, um die Frage abzusenden");
+        } else {
+          setPersonContext[key]({checked: true, loading: false, response: ""});
+        }
       }
     } else {
       setPersonContext[key](personContextDefault);
@@ -115,17 +128,7 @@ function App() {
 
   return (
     <div className="m-10 flex flex-col gap-5">
-      <div>Stelle deine Frage an</div>
-      <div className="flex flex-row gap-3 flex-wrap">
-        {Object.keys(availablePersons).map((key) => (
-          <div key={key}>
-            <div className='flex flex-row items-center'>
-              <Checkbox id={key} disabled={personContext[key].loading} label={availablePersons[key].name} checked={personContext[key].checked} onChange={checked => personSelected(key, checked)}/>
-              <a href={availablePersons[key].info} target="_blank"><GoInfo/></a>
-            </div>
-          </div>
-        ))}
-      </div>
+      <div className='text-xl'>Bald sind Wahlen! Informiere dich jetzt und stelle Fragen an die Kandidaten der Parteien:</div>
       <div className="flex flex-row gap-3 items-center">
         <p className="grow input-container">
           <textarea readOnly={loading} autoFocus onKeyDown={onkeydown} value={question} onChange={e=>setQuestion(e.target.value)}
@@ -135,16 +138,27 @@ function App() {
           {loading ? <IoHourglassOutline size={40}/> : (isQuestionValid() ? <FaRegCheckCircle size={40}/> : <BiNoEntry size={40}/>)}
         </div>
       </div>
+
       {checkResult.length > 0 && !loading && !isQuestionValid() && <div className="text-red-700">Die eingegebene Frage ist leider nicht gültig.</div>}
+      {warningMessage.length>0 && <div className="text-red-700">{warningMessage}</div>}
+
+      <div className='text-lg'>Wähle aus, an wen du die Frage stellen möchtest:</div>
+      <div className="flex flex-row gap-3 flex-wrap">
+        {Object.keys(availablePersons).map((key) => (
+          <div key={key}>
+            <Checkbox id={key} disabled={personContext[key].loading} label={availablePersons[key].name} info={availablePersons[key].info} checked={personContext[key].checked} onChange={checked => personSelected(key, checked)}/>
+          </div>
+        ))}
+      </div>
 
       {acceptedQuestion.length > 0 && <div className="font-bold">Frage:</div>}
       <div className='text-2xl'>
         {acceptedQuestion}
       </div>
-      <div className="flex flex-row gap-3">
+      <div className="flex flex-row gap-3 flex-wrap">
         { Object.entries(personContext).filter(([k,v])=>v.checked).map(([key,ctx]) => (
-          <div key={key} className="grow basis-0 flex flex-col gap-3">
-            <div className="font-bold">{availablePersons[key].name}</div>
+          <div key={key} className="grow basis-0 flex flex-col gap-3 min-w-40">
+            <div className="font-bold">{availablePersons[key].name}:</div>
             <div className="whitespace-pre-line">
               {ctx.response}
             </div>
