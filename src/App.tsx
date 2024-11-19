@@ -117,9 +117,8 @@ function App() {
       } else {
         if (acceptedQuestion.length === 0 && question.trim().length > 0) {
           setWarningMessage("Bitte drücke Enter auf dem Eingabefeld, um die Frage abzusenden");
-        } else {
-          setPersonContext[key]({checked: true, loading: false, response: ""});
         }
+        setPersonContext[key]({checked: true, loading: false, response: ""});
       }
     } else {
       setPersonContext[key](personContextDefault);

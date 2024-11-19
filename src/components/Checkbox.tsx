@@ -16,18 +16,15 @@ export function Checkbox(props: CheckboxProps) {
     return (
         <div className={props.checked ? ' card-selected' : 'card-unselected'} onClick={() => {if (!props.disabled) props.onChange(!props.checked);}}>
             <div className="card">
-                <div className="flex flex-col gap-3 items-end">
-                    <a href={props.info} target="_blank" rel="noreferrer"><GoInfo/></a>
-                    <div className="flex flex-col gap-2 items-center">
-                        <div>
-                            <img src={'/persons/' + props.id + '.jpg'} alt={props.label} className="rounded-full w-20 h-20"/>
-                        </div>
-                        <div>
-                            {props.label}
-                        </div>
-                        <div className="text-sm text-gray-600">
-                            {props.subInfo}
-                        </div>
+                <div className="flex flex-col gap-2 items-center">
+                    <div>
+                        <img src={'/persons/' + props.id + '.jpg'} alt={props.label} className="rounded-full w-20 h-20"/>
+                    </div>
+                    <div>
+                        {props.label}
+                    </div>
+                    <div className="text-sm text-gray-600">
+                        {props.subInfo}
                     </div>
                 </div>
             </div>
