@@ -22,22 +22,26 @@ function App() {
     response: ""
   };
 
-  const availablePersons: { [key: string]: { name: string; info: string } } = {
+  const availablePersons: { [key: string]: { name: string; info: string, partei: string } } = {
     "habeck": {
       name: "Robert Habeck",
-      info: "https://www.gruene.de/leute/robert-habeck"
+      info: "https://www.gruene.de/leute/robert-habeck",
+      partei: "Die Grünen"
     },
     "weidel": {
       name: "Alice Weidel",
-      info: "https://www.afd.de/alice-weidel"
+      info: "https://www.afd.de/alice-weidel",
+      partei: "AfD"
     },
     "scholz": {
       name: "Olaf Scholz",
-      info: "https://olaf-scholz.spd.de/start"
+      info: "https://olaf-scholz.spd.de/start",
+      partei: "SPD"
     },
     "merz": {
       name: "Friedrich Merz",
-      info: "https://www.merz.cdu.de/"
+      info: "https://www.merz.cdu.de/",
+      partei: "CDU"
     }
   }
 
@@ -146,7 +150,12 @@ function App() {
       <div className="flex flex-row gap-3 flex-wrap">
         {Object.keys(availablePersons).map((key) => (
           <div key={key}>
-            <Checkbox id={key} disabled={personContext[key].loading} label={availablePersons[key].name} info={availablePersons[key].info} checked={personContext[key].checked} onChange={checked => personSelected(key, checked)}/>
+            <Checkbox id={key} disabled={personContext[key].loading}
+                    label={availablePersons[key].name}
+                    info={availablePersons[key].info}
+                    subInfo={availablePersons[key].partei}
+                    checked={personContext[key].checked}
+                    onChange={checked => personSelected(key, checked)}/>
           </div>
         ))}
       </div>
