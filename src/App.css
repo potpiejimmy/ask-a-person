@@ -16,3 +16,10 @@
       inset -20px -20px 60px #ffffff;
    transition: 0.3s;
 }
+
+.responseCard {
+   border-radius: 30px;
+   background: #f0f0f0;
+   box-shadow: 7px 7px 15px #bebebe,
+      -7px -7px 15px #ffffff;
+}

@@ -131,7 +131,7 @@ function App() {
   }
 
   return (
-    <div className="m-10 flex flex-col gap-5">
+    <div className="m-5 sm:m-10 flex flex-col gap-5">
       <div className='text-xl'>Bald sind Wahlen! Informiere dich jetzt und stelle Fragen an die Kandidaten der Parteien:</div>
       <div className="flex flex-row gap-3 items-center">
         <p className="grow input-container">
@@ -149,7 +149,7 @@ function App() {
       <div className='text-lg'>Wähle aus, an wen du die Frage stellen möchtest:</div>
       <div className="flex flex-row gap-3 flex-wrap">
         {Object.keys(availablePersons).map((key) => (
-          <div key={key}>
+          <div key={key} className='grow basis-0 min-w-40'>
             <Checkbox id={key} disabled={personContext[key].loading}
                     label={availablePersons[key].name}
                     info={availablePersons[key].info}
@@ -160,13 +160,19 @@ function App() {
         ))}
       </div>
 
-      {acceptedQuestion.length > 0 && <div className="font-bold">Frage:</div>}
-      <div className='text-2xl'>
-        {acceptedQuestion}
-      </div>
+      {acceptedQuestion.length > 0 && 
+        <div className='responseCard p-5 flex flex-col gap-2'>
+          <div>
+            <div className="font-bold">Frage:</div>
+          </div>
+          <div className='text-2xl'>
+            {acceptedQuestion}
+          </div>
+        </div>
+      }
       <div className="flex flex-row gap-3 flex-wrap">
         { Object.entries(personContext).filter(([k,v])=>v.checked).map(([key,ctx]) => (
-          <div key={key} className="grow basis-0 flex flex-col gap-3 min-w-40">
+          <div key={key} className="grow basis-0 flex flex-col gap-3 min-w-40 responseCard p-5">
             <div className="font-bold">{availablePersons[key].name}:</div>
             <div className="whitespace-pre-line">
               {ctx.response}
