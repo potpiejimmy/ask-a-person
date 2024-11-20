@@ -33,25 +33,25 @@ function App() {
   };
 
   const availablePersons: { [key: string]: { name: string; info: string, partei: string } } = {
-    "habeck": {
-      name: "Robert Habeck",
-      info: "https://www.gruene.de/leute/robert-habeck",
-      partei: "Die Grünen"
-    },
-    "weidel": {
-      name: "Alice Weidel",
-      info: "https://www.afd.de/alice-weidel",
-      partei: "AfD"
+    "merz": {
+      name: "Friedrich Merz",
+      info: "https://www.merz.cdu.de/",
+      partei: "CDU"
     },
     "scholz": {
       name: "Olaf Scholz",
       info: "https://olaf-scholz.spd.de/start",
       partei: "SPD"
     },
-    "merz": {
-      name: "Friedrich Merz",
-      info: "https://www.merz.cdu.de/",
-      partei: "CDU"
+    "weidel": {
+      name: "Alice Weidel",
+      info: "https://www.afd.de/alice-weidel",
+      partei: "AfD"
+    },
+    "habeck": {
+      name: "Robert Habeck",
+      info: "https://www.gruene.de/leute/robert-habeck",
+      partei: "Die Grünen"
     }
   }
 
