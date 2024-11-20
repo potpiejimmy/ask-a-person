@@ -4,6 +4,7 @@ import './App.css';
 import { Checkbox } from './components/Checkbox';
 import { IoHourglassOutline } from "react-icons/io5";
 import Disclaimer from './components/Disclaimer';
+import PoweredBy from './components/PoweredBy';
 
 interface PersonContext {
   checked: boolean;
@@ -15,7 +16,6 @@ interface PersonContext {
 }
 
 const DUMMY_RESPONSES = false;
-const GPT_MODEL_NAME = "GPT-4o";
 
 function App() {
 
@@ -176,7 +176,11 @@ function App() {
 
       {!disclaimerDismissed && <Disclaimer onClick={()=>setDisclaimerDismissed(true)}/>}
 
-      <div className='text-xl'>Bald sind Wahlen in Deutschland! Informiere dich jetzt und stelle deine Fragen an die Kandidaten der Parteien:</div>
+      <div className='text-xl'>
+        Bald sind Wahlen in Deutschland. Hier kannst du dich auf eine völlig neue Art und Weise informieren, ohne stundenlange Interviews oder Fernsehsendungen ansehen zu müssen.
+        Stelle einfach deine Fragen direkt an die Spitzenkandidaten der Parteien und führe ein Gespräch mit ihnen.
+      </div>
+
       <div className="flex flex-row gap-3 items-center">
         <p className="grow input-container">
           <textarea readOnly={loading} autoFocus onKeyDown={onkeydown} value={question} onChange={e=>setQuestion(e.target.value)}
@@ -216,7 +220,7 @@ function App() {
         { Object.entries(personContext).filter(([k,v])=>v.checked).map(([key,ctx]) => (
           <div key={key} className="grow basis-0 flex flex-col gap-3 min-w-40 responseCard p-5">
 
-            <div className="font-bold">{GPT_MODEL_NAME} für {availablePersons[key].name}:</div>
+            <PoweredBy name={availablePersons[key].name}/>
             
             <div className="whitespace-pre-line">
               {ctx.response}
@@ -230,9 +234,9 @@ function App() {
 
             {ctx.history && ctx.history.length > 0 && ctx.history.map((item, idx) => (
                   <div key={idx} className="flex flex-col gap-2">
-                    <div className="font-bold">Du:</div>
+                    <div className="font-bold">Deine Frage:</div>
                     <div>{item.question}</div>
-                    <div className="font-bold">{GPT_MODEL_NAME} für {availablePersons[key].name}:</div>
+                    <PoweredBy name={availablePersons[key].name}/>
                     <div className="whitespace-pre-line">{item.response}</div>
                   </div>
                 ))
