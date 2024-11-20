@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import AskAPi from './api/AskApi';
 import './App.css';
 import { Checkbox } from './components/Checkbox';
@@ -9,18 +9,26 @@ interface PersonContext {
   checked: boolean;
   loading: boolean;
   response: string;
-  followup?: string;
-  history?: { question: string, response: string }[];
+  followup: string;
+  warning: string;
+  history?: { question?: string, response?: string }[];
 }
 
 const DUMMY_RESPONSES = false;
 
 function App() {
 
+  const bottomAnchor = useRef<HTMLDivElement>(null)
+  function scrollToBottom() {
+    setTimeout(()=>bottomAnchor.current?.scrollIntoView({ behavior: "smooth" }), 100);
+  }
+
   const personContextDefault: PersonContext = {
     checked: false,
     loading: false,
-    response: ""
+    response: "",
+    followup: "",
+    warning: ""
   };
 
   const availablePersons: { [key: string]: { name: string; info: string, partei: string } } = {
@@ -92,6 +100,33 @@ function App() {
     }
   }
 
+  async function followUpKeyDown(key: string, event: React.KeyboardEvent<HTMLTextAreaElement>) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      let q = personContext[key].followup;
+      if (q.trim().length === 0) return;
+      setPersonContext[key]({...personContext[key], loading: true, warning: ""});
+      let check = await askCheckBot(q);
+      if (check.answer === 'Ja') {
+
+        setPersonContext[key]({...personContext[key], loading: true, followup: "", warning: "", history: [...(personContext[key].history || []), {
+          question: q,
+          response: "..."
+        }]});
+        scrollToBottom();
+
+        let res = await api.ask(DUMMY_RESPONSES ? "dummy" : key, q);
+        setPersonContext[key]({...personContext[key], loading: false, followup: "", warning: "", history: [...(personContext[key].history || []), {
+          question: q,
+          response: res.answer
+        }]});
+      } else {
+        setPersonContext[key]({...personContext[key], warning: "Die eingegebene Frage ist leider nicht gültig."});
+      }
+      scrollToBottom();
+    }
+  }
+
   function isQuestionValid() {
     return checkResult === 'Ja';
   }
@@ -105,11 +140,12 @@ function App() {
   }
 
   async function performQuestion(person: string, question: string) {
-      setPersonContext[person]({checked: true, loading: true, response: "..."});
+      setPersonContext[person]({...personContextDefault, checked: true, loading: true, response: "..."});
 
       let response = await api.ask(DUMMY_RESPONSES ? "dummy" : person, question);
 
-      setPersonContext[person]({checked: true, loading: false, response: response.answer});
+      setPersonContext[person]({...personContextDefault, checked: true, loading: false, response: response.answer});
+      scrollToBottom();
   }
 
   async function personSelected(key: string, checked: boolean) {
@@ -120,7 +156,7 @@ function App() {
         if (acceptedQuestion.length === 0 && question.trim().length > 0) {
           setWarningMessage("Bitte drücke Enter auf dem Eingabefeld, um die Frage abzusenden");
         }
-        setPersonContext[key]({checked: true, loading: false, response: ""});
+        setPersonContext[key]({...personContextDefault, checked: true, loading: false});
       }
     } else {
       setPersonContext[key](personContextDefault);
@@ -173,24 +209,40 @@ function App() {
       <div className="flex flex-row gap-3 flex-wrap">
         { Object.entries(personContext).filter(([k,v])=>v.checked).map(([key,ctx]) => (
           <div key={key} className="grow basis-0 flex flex-col gap-3 min-w-40 responseCard p-5">
+
             <div className="font-bold">{availablePersons[key].name}:</div>
+            
             <div className="whitespace-pre-line">
               {ctx.response}
             </div>
-            {!ctx.history && !ctx.loading &&
+            
+            {!ctx.history && !ctx.loading && acceptedQuestion.length > 0 &&
               <div>
                 <a href="/" className='text-green-900' onClick={event=>{setPersonContext[key]({...personContext[key], history: []}); event.preventDefault();}}>Gespräch fortführen ➤</a>
               </div>
             }
+
+            {ctx.history && ctx.history.length > 0 && ctx.history.map((item, idx) => (
+                  <div key={idx} className="flex flex-col gap-2">
+                    <div className="font-bold">Du:</div>
+                    <div>{item.question}</div>
+                    <div className="font-bold">{availablePersons[key].name}:</div>
+                    <div>{item.response}</div>
+                  </div>
+                ))
+            }
+
             {ctx.history &&
               <div>
-                <textarea readOnly={loading} autoFocus onKeyDown={onkeydown} value={personContext[key].followup} onChange={e => setPersonContext[key]({...personContext[key], followup: e.target.value})}
+                <textarea readOnly={personContext[key].loading} autoFocus onKeyDown={e=>followUpKeyDown(key, e)} value={personContext[key].followup} onChange={e => setPersonContext[key]({...personContext[key], followup: e.target.value})}
                       name="text" id="question" className="input" placeholder="Gib hier deine Folgefrage ein"></textarea>
+                {personContext[key].warning.length > 0 && <div className="text-red-700">{personContext[key].warning}</div>}
               </div>
             }
           </div>
         ))}
       </div>
+      <div ref={bottomAnchor}></div>
     </div>
   );
 }
