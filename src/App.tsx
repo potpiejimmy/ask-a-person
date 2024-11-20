@@ -57,10 +57,10 @@ function App() {
 
   const personContext: { [key: string]: PersonContext } = {};
   const setPersonContext: { [key: string]: React.Dispatch<React.SetStateAction<PersonContext>> } = {};
-  [personContext["habeck"], setPersonContext["habeck"]] = React.useState<PersonContext>(personContextDefault);
-  [personContext["weidel"], setPersonContext["weidel"]] = React.useState<PersonContext>(personContextDefault);
-  [personContext["scholz"], setPersonContext["scholz"]] = React.useState<PersonContext>(personContextDefault);
   [personContext["merz"], setPersonContext["merz"]] = React.useState<PersonContext>(personContextDefault);
+  [personContext["scholz"], setPersonContext["scholz"]] = React.useState<PersonContext>(personContextDefault);
+  [personContext["weidel"], setPersonContext["weidel"]] = React.useState<PersonContext>(personContextDefault);
+  [personContext["habeck"], setPersonContext["habeck"]] = React.useState<PersonContext>(personContextDefault);
 
   const [disclaimerDismissed, setDisclaimerDismissed] = React.useState<boolean>(false);
   const [question, setQuestion] = React.useState<string>("");
