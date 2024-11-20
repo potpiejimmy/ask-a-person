@@ -230,7 +230,7 @@ function App() {
                     <div className="font-bold">Du:</div>
                     <div>{item.question}</div>
                     <div className="font-bold">{availablePersons[key].name}:</div>
-                    <div>{item.response}</div>
+                    <div className="whitespace-pre-line">{item.response}</div>
                   </div>
                 ))
             }
