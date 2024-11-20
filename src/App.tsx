@@ -115,7 +115,10 @@ function App() {
         }]});
         scrollToBottom();
 
-        let res = await api.ask(DUMMY_RESPONSES ? "dummy" : key, q);
+        let res = await api.ask(DUMMY_RESPONSES ? "dummy" : key, q, [
+          { question: acceptedQuestion, response: personContext[key].response }, /* initial question and response */
+          ...(personContext[key].history || [])  /* Note that history is still old here without the last ... entry */
+        ]);
         setPersonContext[key]({...personContext[key], loading: false, followup: "", warning: "", history: [...(personContext[key].history || []), {
           question: q,
           response: res.answer
