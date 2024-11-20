@@ -97,6 +97,7 @@ function App() {
   async function onkeydown(event: React.KeyboardEvent<HTMLTextAreaElement>) {
     if (event.key === 'Enter') {
       event.preventDefault();
+      if (loading) return;
       checkQuestion();
     }
   }
@@ -104,6 +105,7 @@ function App() {
   async function followUpKeyDown(key: string, event: React.KeyboardEvent<HTMLTextAreaElement>) {
     if (event.key === 'Enter') {
       event.preventDefault();
+      if (personContext[key].loading) return;
       let q = personContext[key].followup;
       if (q.trim().length === 0) return;
       setPersonContext[key]({...personContext[key], loading: true, warning: ""});
