@@ -15,6 +15,7 @@ interface PersonContext {
 }
 
 const DUMMY_RESPONSES = false;
+const GPT_MODEL_NAME = "GPT-4o";
 
 function App() {
 
@@ -213,7 +214,7 @@ function App() {
         { Object.entries(personContext).filter(([k,v])=>v.checked).map(([key,ctx]) => (
           <div key={key} className="grow basis-0 flex flex-col gap-3 min-w-40 responseCard p-5">
 
-            <div className="font-bold">{availablePersons[key].name}:</div>
+            <div className="font-bold">{GPT_MODEL_NAME} für {availablePersons[key].name}:</div>
             
             <div className="whitespace-pre-line">
               {ctx.response}
@@ -229,7 +230,7 @@ function App() {
                   <div key={idx} className="flex flex-col gap-2">
                     <div className="font-bold">Du:</div>
                     <div>{item.question}</div>
-                    <div className="font-bold">{availablePersons[key].name}:</div>
+                    <div className="font-bold">{GPT_MODEL_NAME} für {availablePersons[key].name}:</div>
                     <div className="whitespace-pre-line">{item.response}</div>
                   </div>
                 ))
