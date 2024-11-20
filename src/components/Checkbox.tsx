@@ -1,5 +1,4 @@
 import "./Checkbox.css";
-import { GoInfo } from "react-icons/go";
 
 interface CheckboxProps {
     id: string;

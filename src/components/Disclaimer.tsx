@@ -19,14 +19,14 @@ export default function Disclaimer(props: DisclaimerProps) {
                     <button className="exit-btn" onClick={()=>props.onClick()}>
                     <svg fill="none" viewBox="0 0 15 15" height="15" width="15">
                         <path
-                        stroke-linecap="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeWidth="2"
                         stroke="black"
                         d="M1 14L14 1"
                         ></path>
                         <path
-                        stroke-linecap="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeWidth="2"
                         stroke="black"
                         d="M1 1L14 14"
                         ></path>

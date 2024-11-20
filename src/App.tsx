@@ -9,6 +9,8 @@ interface PersonContext {
   checked: boolean;
   loading: boolean;
   response: string;
+  followup?: string;
+  history?: { question: string, response: string }[];
 }
 
 const DUMMY_RESPONSES = false;
@@ -175,6 +177,17 @@ function App() {
             <div className="whitespace-pre-line">
               {ctx.response}
             </div>
+            {!ctx.history && !ctx.loading &&
+              <div>
+                <a href="/" className='text-green-900' onClick={event=>{setPersonContext[key]({...personContext[key], history: []}); event.preventDefault();}}>Gespräch fortführen ➤</a>
+              </div>
+            }
+            {ctx.history &&
+              <div>
+                <textarea readOnly={loading} autoFocus onKeyDown={onkeydown} value={personContext[key].followup} onChange={e => setPersonContext[key]({...personContext[key], followup: e.target.value})}
+                      name="text" id="question" className="input" placeholder="Gib hier deine Folgefrage ein"></textarea>
+              </div>
+            }
           </div>
         ))}
       </div>
