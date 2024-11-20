@@ -94,10 +94,14 @@ function App() {
     setLoading(false);
   }
 
+  function isAnythingLoading() {
+    return loading || Object.keys(personContext).some(key => personContext[key].loading);
+  }
+
   async function onkeydown(event: React.KeyboardEvent<HTMLTextAreaElement>) {
     if (event.key === 'Enter') {
       event.preventDefault();
-      if (loading) return;
+      if (isAnythingLoading()) return;
       checkQuestion();
     }
   }
@@ -183,7 +187,7 @@ function App() {
 
       <div className="flex flex-row gap-3 items-center">
         <p className="grow input-container">
-          <textarea readOnly={loading} autoFocus onKeyDown={onkeydown} value={question} onChange={e=>setQuestion(e.target.value)}
+          <textarea readOnly={isAnythingLoading()} autoFocus onKeyDown={onkeydown} value={question} onChange={e=>setQuestion(e.target.value)}
                  name="text" id="question" className="input" placeholder="Gib hier deine Frage ein"></textarea>
         </p>
         {loading && <IoHourglassOutline size={40}/>}
