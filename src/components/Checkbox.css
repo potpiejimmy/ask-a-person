@@ -34,3 +34,19 @@
     border: 3px solid #203a70;
     border-radius: 20px;
 }
+
+@media (prefers-color-scheme: dark) {
+    .card {
+        background: #202020;
+        border: 1px solid #444;
+        color: white;
+    }
+
+    .card-unselected {
+        border: 3px solid rgba(0, 0, 0, 0.58);
+    }
+
+    .card-selected {
+        border: 3px solid #3b6edb;
+    }
+}

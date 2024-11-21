@@ -11,7 +11,7 @@ export default function PoweredBy(props: PoweredByProps) {
             <div className="font-bold">
                 {props.name}:
             </div>
-            <div className='text-xs text-gray-600'>powered by {GPT_MODEL_NAME}</div>
+            <div className='text-xs text-gray-600 dark:text-gray-400'>powered by {GPT_MODEL_NAME}</div>
         </div>
     );
 }

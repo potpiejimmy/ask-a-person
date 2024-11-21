@@ -22,3 +22,21 @@
    box-shadow: 7px 7px 15px #bebebe,
       -7px -7px 15px #ffffff;
 }
+
+@media (prefers-color-scheme: dark) {
+   .input {
+      background: #404040;
+   }
+   .input:focus {
+      outline-color: #404040;
+      background: #404040;
+      box-shadow: inset 20px 20px 60px #484848,
+      inset -20px -20px 60px #000000;
+   }
+   
+   .responseCard {
+      background: #202020;
+      box-shadow: 7px 7px 15px #303030,
+      -7px -7px 15px #000000;
+   }
+}

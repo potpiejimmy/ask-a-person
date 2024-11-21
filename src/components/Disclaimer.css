@@ -19,6 +19,7 @@
 .alertcard-heading {
     font-size: 1em;
     font-weight: 800;
+    color: rgb(49, 49, 49);
 }
 
 .alertcard-content {

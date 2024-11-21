@@ -22,7 +22,7 @@ export function Checkbox(props: CheckboxProps) {
                     <div>
                         {props.label}
                     </div>
-                    <div className="text-sm text-gray-600">
+                    <div className="text-sm text-gray-600 dark:text-gray-400">
                         {props.subInfo}
                     </div>
                 </div>

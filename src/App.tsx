@@ -200,7 +200,7 @@ function App() {
   return (
     <div className="m-5 sm:m-10 flex flex-col gap-5">
 
-      {DUMMY_RESPONSES && <div className="text-red-700">Dummy responses are enabled</div>}
+      {DUMMY_RESPONSES && <div className="text-red-700 dark:text-red-300">Dummy responses are enabled</div>}
 
       {!disclaimerDismissed && <Disclaimer onClick={()=>setDisclaimerDismissed(true)}/>}
 
@@ -220,8 +220,8 @@ function App() {
         {loading && <IoHourglassOutline size={40}/>}
       </div>
 
-      {checkResult.length > 0 && !loading && !isQuestionValid() && <div className="text-red-700">Die eingegebene Frage ist leider nicht gültig.</div>}
-      {warningMessage.length>0 && <div className="text-red-700">{warningMessage}</div>}
+      {checkResult.length > 0 && !loading && !isQuestionValid() && <div className="text-red-700 dark:text-red-300">Die eingegebene Frage ist leider nicht gültig.</div>}
+      {warningMessage.length>0 && <div className="text-red-700 dark:text-red-300">{warningMessage}</div>}
 
       <div className='text-lg'>Wähle aus, an wen du die Frage stellen möchtest. Du kannst mehrere Politiker auswählen und dann die Antworten vergleichen:</div>
       <div className="flex flex-row gap-3 flex-wrap">
@@ -259,7 +259,7 @@ function App() {
             
             {!ctx.history && !ctx.loading && acceptedQuestion.length > 0 && personContext[key].response.length > 0 &&
               <div>
-                <a href="/" className='text-blue-900' onClick={event=>{setPersonContext[key]({...personContext[key], history: []}); event.preventDefault();}}>Gespräch fortführen ➤</a>
+                <a href="/" className='text-blue-800 dark:text-blue-300' onClick={event=>{setPersonContext[key]({...personContext[key], history: []}); event.preventDefault();}}>Gespräch fortführen ➤</a>
               </div>
             }
 
@@ -277,7 +277,7 @@ function App() {
               <div>
                 <textarea readOnly={personContext[key].loading} autoFocus onKeyDown={e=>followUpKeyDown(key, e)} value={personContext[key].followup} onChange={e => setPersonContext[key]({...personContext[key], followup: e.target.value})}
                       name="text" id="question" className="input" placeholder="Gib hier deine Folgefrage ein"></textarea>
-                {personContext[key].warning.length > 0 && <div className="text-red-700">{personContext[key].warning}</div>}
+                {personContext[key].warning.length > 0 && <div className="text-red-700 dark:text-red-300">{personContext[key].warning}</div>}
               </div>
             }
           </div>
