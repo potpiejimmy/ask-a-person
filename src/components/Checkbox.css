@@ -31,6 +31,6 @@
 }
 
 .card-selected {
-    border: 3px solid darkgreen;
+    border: 3px solid #203a70;
     border-radius: 20px;
 }
