@@ -15,7 +15,8 @@ interface PersonContext {
   history?: { question?: string, response?: string }[];
 }
 
-const DUMMY_RESPONSES = false;
+const DUMMY_RESPONSES = true;
+const GENERIC_ERROR_MESSAGE = "Das hat leider ich nicht geklappt. Bitte versuche es erneut.";
 
 function App() {
 
@@ -84,14 +85,21 @@ function App() {
     setLoading(true);
     setWarningMessage("");
     setCheckResult("");
-    let res = await askCheckBot(question);
-    if (res.answer === 'Ja') {
-      setQuestion("");
-      setAcceptedQuestion(question);
-      performQuestionToAll(question);
+
+    try {
+      let res = await askCheckBot(question);
+      if (res.answer === 'Ja') {
+        setQuestion("");
+        setAcceptedQuestion(question);
+        performQuestionToAll(question);
+      }
+      setCheckResult(res.answer);
+      setLoading(false);
+    } catch (e) {
+      console.error(e);
+      setWarningMessage(GENERIC_ERROR_MESSAGE);
+      setLoading(false);
     }
-    setCheckResult(res.answer);
-    setLoading(false);
   }
 
   function isAnythingLoading() {
@@ -110,9 +118,43 @@ function App() {
     if (event.key === 'Enter') {
       event.preventDefault();
       if (personContext[key].loading) return;
-      let q = personContext[key].followup;
-      if (q.trim().length === 0) return;
-      setPersonContext[key]({...personContext[key], loading: true, warning: ""});
+      performFollowUpQuestion(key);
+    }
+  }
+
+  function isQuestionValid() {
+    return checkResult === 'Ja';
+  }
+
+  async function performQuestionToAll(question: string) {
+    Object.keys(personContext).forEach(key => {
+      if (personContext[key].checked) {
+        performQuestion(key, question);
+      }
+    });
+  }
+
+  async function performQuestion(person: string, question: string) {
+      setPersonContext[person]({...personContextDefault, checked: true, loading: true, response: "..."});
+
+      try {
+        let response = await api.ask(DUMMY_RESPONSES ? "dummy" : person, question);
+
+        setPersonContext[person]({...personContextDefault, checked: true, loading: false, response: response.answer});
+        scrollToBottom();
+      } catch (e) {
+        console.error(e);
+        setWarningMessage(GENERIC_ERROR_MESSAGE);
+        setPersonContext[person]({...personContextDefault, checked: true, loading: false, response: ""});
+      }
+  }
+
+  async function performFollowUpQuestion(key: string) {
+    let q = personContext[key].followup;
+    if (q.trim().length === 0) return;
+    setPersonContext[key]({...personContext[key], loading: true, warning: ""});
+
+    try {
       let check = await askCheckBot(q);
       if (check.answer === 'Ja') {
 
@@ -134,28 +176,10 @@ function App() {
         setPersonContext[key]({...personContext[key], warning: "Die eingegebene Frage ist leider nicht gültig."});
       }
       scrollToBottom();
+    } catch (e) {
+      console.error(e);
+      setPersonContext[key]({...personContext[key], loading: false, followup: "", warning: GENERIC_ERROR_MESSAGE});
     }
-  }
-
-  function isQuestionValid() {
-    return checkResult === 'Ja';
-  }
-
-  async function performQuestionToAll(question: string) {
-    Object.keys(personContext).forEach(key => {
-      if (personContext[key].checked) {
-        performQuestion(key, question);
-      }
-    });
-  }
-
-  async function performQuestion(person: string, question: string) {
-      setPersonContext[person]({...personContextDefault, checked: true, loading: true, response: "..."});
-
-      let response = await api.ask(DUMMY_RESPONSES ? "dummy" : person, question);
-
-      setPersonContext[person]({...personContextDefault, checked: true, loading: false, response: response.answer});
-      scrollToBottom();
   }
 
   async function personSelected(key: string, checked: boolean) {
@@ -230,7 +254,7 @@ function App() {
               {ctx.response}
             </div>
             
-            {!ctx.history && !ctx.loading && acceptedQuestion.length > 0 &&
+            {!ctx.history && !ctx.loading && acceptedQuestion.length > 0 && personContext[key].response.length > 0 &&
               <div>
                 <a href="/" className='text-green-900' onClick={event=>{setPersonContext[key]({...personContext[key], history: []}); event.preventDefault();}}>Gespräch fortführen ➤</a>
               </div>
