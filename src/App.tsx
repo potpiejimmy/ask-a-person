@@ -15,7 +15,7 @@ interface PersonContext {
   history?: { question?: string, response?: string }[];
 }
 
-const DUMMY_RESPONSES = true;
+const DUMMY_RESPONSES = false;
 const GENERIC_ERROR_MESSAGE = "Das hat leider ich nicht geklappt. Bitte versuche es erneut.";
 
 function App() {
@@ -204,9 +204,12 @@ function App() {
 
       {!disclaimerDismissed && <Disclaimer onClick={()=>setDisclaimerDismissed(true)}/>}
 
-      <div className='text-xl'>
-        Bald sind Wahlen in Deutschland. Hier kannst du dich auf eine völlig neue Art und Weise informieren, ohne stundenlange Interviews oder Fernsehsendungen ansehen zu müssen.
-        Stelle einfach deine Fragen direkt an die Spitzenkandidaten der Parteien und führe ein Gespräch mit ihnen.
+      <div className="flex flex-row gap-3">
+        <img src="/logo192.png" alt="Logo" className="w-16 h-16"/>
+        <div className='text-xl'>
+          Bald sind Wahlen in Deutschland. Hier kannst du dich auf eine völlig neue Art und Weise informieren, ohne stundenlange Interviews oder Fernsehsendungen ansehen zu müssen.
+          Stelle einfach deine Fragen direkt an die Spitzenkandidaten der Parteien und führe ein Gespräch mit ihnen.
+        </div>
       </div>
 
       <div className="flex flex-row gap-3 items-center">
