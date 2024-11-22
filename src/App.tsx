@@ -5,6 +5,7 @@ import { Checkbox } from './components/Checkbox';
 import { IoHourglassOutline } from "react-icons/io5";
 import Disclaimer from './components/Disclaimer';
 import PoweredBy from './components/PoweredBy';
+import { useSearchParams } from 'react-router-dom';
 
 interface PersonContext {
   checked: boolean;
@@ -37,41 +38,63 @@ function App() {
     warning: ""
   };
 
-  const availablePersons: { [key: string]: { name: string; info: string, partei: string } } = {
-    "merz": {
-      name: "Friedrich Merz",
-      info: "https://www.merz.cdu.de/",
-      partei: "CDU"
-    },
-    "scholz": {
-      name: "Olaf Scholz",
-      info: "https://olaf-scholz.spd.de/start",
-      partei: "SPD"
-    },
-    "weidel": {
-      name: "Alice Weidel",
-      info: "https://www.afd.de/alice-weidel",
-      partei: "AfD"
-    },
-    "habeck": {
-      name: "Robert Habeck",
-      info: "https://www.gruene.de/leute/robert-habeck",
-      partei: "Die Grünen"
-    },
-    "lindner": {
-      name: "Christian Lindner",
-      info: "https://www.fdp.de/person/christian-lindner",
-      partei: "FDP"
-    },
-    "wagenknecht": {
-      name: "Sahra Wagenknecht",
-      info: "https://bsw-vg.de/",
-      partei: "BSW"
-    }
-  }
+  const [ searchParams ] = useSearchParams();
+  let groupId = searchParams.get('group');
 
+  let availablePersons: { [key: string]: { name: string; info: string, partei: string } } = {};
   const personContext: { [key: string]: PersonContext } = {};
   const setPersonContext: { [key: string]: React.Dispatch<React.SetStateAction<PersonContext>> } = {};
+
+  if (groupId === "us2024") {
+
+    availablePersons = {
+      "musk": {
+        name: "Elon Musk",
+        info: "https://x.com/elonmusk",
+        partei: "Unternehmer"
+      }
+    };
+
+  } else {
+
+    availablePersons = {
+      "merz": {
+        name: "Friedrich Merz",
+        info: "https://www.merz.cdu.de/",
+        partei: "CDU"
+      },
+      "scholz": {
+        name: "Olaf Scholz",
+        info: "https://olaf-scholz.spd.de/start",
+        partei: "SPD"
+      },
+      "weidel": {
+        name: "Alice Weidel",
+        info: "https://www.afd.de/alice-weidel",
+        partei: "AfD"
+      },
+      "habeck": {
+        name: "Robert Habeck",
+        info: "https://www.gruene.de/leute/robert-habeck",
+        partei: "Die Grünen"
+      },
+      "lindner": {
+        name: "Christian Lindner",
+        info: "https://www.fdp.de/person/christian-lindner",
+        partei: "FDP"
+      },
+      "wagenknecht": {
+        name: "Sahra Wagenknecht",
+        info: "https://bsw-vg.de/",
+        partei: "BSW"
+      }
+    };
+  }
+
+  // us2024
+  [personContext["musk"], setPersonContext["musk"]] = React.useState<PersonContext>(personContextDefault);
+
+  // default
   [personContext["merz"], setPersonContext["merz"]] = React.useState<PersonContext>(personContextDefault);
   [personContext["scholz"], setPersonContext["scholz"]] = React.useState<PersonContext>(personContextDefault);
   [personContext["weidel"], setPersonContext["weidel"]] = React.useState<PersonContext>(personContextDefault);
