@@ -53,6 +53,16 @@ function App() {
       name: "Robert Habeck",
       info: "https://www.gruene.de/leute/robert-habeck",
       partei: "Die Grünen"
+    },
+    "lindner": {
+      name: "Christian Lindner",
+      info: "https://www.fdp.de/person/christian-lindner",
+      partei: "FDP"
+    },
+    "wagenknecht": {
+      name: "Sahra Wagenknecht",
+      info: "https://bsw-vg.de/",
+      partei: "BSW"
     }
   }
 
@@ -62,6 +72,8 @@ function App() {
   [personContext["scholz"], setPersonContext["scholz"]] = React.useState<PersonContext>(personContextDefault);
   [personContext["weidel"], setPersonContext["weidel"]] = React.useState<PersonContext>(personContextDefault);
   [personContext["habeck"], setPersonContext["habeck"]] = React.useState<PersonContext>(personContextDefault);
+  [personContext["lindner"], setPersonContext["lindner"]] = React.useState<PersonContext>(personContextDefault);
+  [personContext["wagenknecht"], setPersonContext["wagenknecht"]] = React.useState<PersonContext>(personContextDefault);
 
   const [disclaimerDismissed, setDisclaimerDismissed] = React.useState<boolean>(false);
   const [question, setQuestion] = React.useState<string>("");
