@@ -63,3 +63,9 @@
 
     transition: all 0.3s;
 }
+
+@media (prefers-color-scheme: dark) {
+    .alertcard {
+        background: #dfcba3;
+    }
+}

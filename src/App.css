@@ -9,7 +9,7 @@
 }
 
 .input:focus {
-   outline-color: #e8e8e8;
+   outline-color: #aaa;
    background: #e8e8e8;
    box-shadow: inset 20px 20px 60px #e5e5e5,
       inset -20px -20px 60px #ffffff;
