@@ -16,13 +16,17 @@ interface PersonContext {
 }
 
 const DUMMY_RESPONSES = false;
+
 const GENERIC_ERROR_MESSAGE = "Das hat leider ich nicht geklappt. Bitte versuche es erneut.";
 
 function App() {
 
-  const bottomAnchor = useRef<HTMLDivElement>(null)
-  function scrollToBottom() {
-    setTimeout(()=>bottomAnchor.current?.scrollIntoView({ behavior: "smooth" }), 100);
+  const questionAnchor = useRef<HTMLDivElement>(null);
+  const bottomAnchor = useRef<HTMLDivElement>(null);
+  function scrollToQuestion() { scrollToAnchor(questionAnchor); }
+  function scrollToBottom() { scrollToAnchor(bottomAnchor); }
+  function scrollToAnchor(anchor: React.RefObject<HTMLDivElement>) {
+      setTimeout(()=>anchor.current?.scrollIntoView({ behavior: "smooth" }), 100);
   }
 
   const personContextDefault: PersonContext = {
@@ -153,7 +157,7 @@ function App() {
         let response = await api.ask(DUMMY_RESPONSES ? "dummy" : person, question);
 
         setPersonContext[person]({...personContextDefault, checked: true, loading: false, response: response.answer});
-        scrollToBottom();
+        scrollToQuestion();
       } catch (e) {
         console.error(e);
         setWarningMessage(GENERIC_ERROR_MESSAGE);
@@ -250,7 +254,7 @@ function App() {
       </div>
 
       {acceptedQuestion.length > 0 && 
-        <div className='responseCard p-5 flex flex-col gap-2'>
+        <div ref={questionAnchor} className='responseCard p-5 flex flex-col gap-2'>
           <div>
             <div className="font-bold">Frage:</div>
           </div>
