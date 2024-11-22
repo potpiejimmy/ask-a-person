@@ -19,7 +19,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && cd build && zip -r dist.zip * && cd ..",
+    "build": "react-scripts build",
+    "release": "npm run build && cd build && zip -r dist.zip * && scp dist.zip plauder@plauder.ai:httpdocs/ && cd .. && ssh plauder@plauder.ai 'cd httpdocs && unzip -o dist.zip'",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
