@@ -3,6 +3,7 @@ import AskAPi from './api/AskApi';
 import './App.css';
 import { Checkbox } from './components/Checkbox';
 import { IoHourglassOutline } from "react-icons/io5";
+import { IoClose } from "react-icons/io5";
 import Disclaimer from './components/Disclaimer';
 import PoweredBy from './components/PoweredBy';
 import { useSearchParams } from 'react-router-dom';
@@ -333,8 +334,13 @@ function App() {
         {suggestionsVisible && availableSuggestions.length > 0 && !isAnythingLoading() &&
           <div className='p-2 border border-gray-300 dark:border-gray-700 h-40 overflow-y-scroll'>
             <div className='flex flex-col'>
-              <div className='p-2'>
-                Oder wähle eine Frage aus (du kannst auch nach Stichpunkten filtern):
+              <div className='flex flex-row'>
+                <div className='p-2 grow'>
+                  Oder wähle eine Frage aus (du kannst auch nach Stichpunkten filtern):
+                </div>
+                <div>
+                  <IoClose size={20} className='cursor-pointer' onClick={()=>setSuggestionsVisible(false)}/>
+                </div>
               </div>
               {filteredSuggestions().map((suggestion, idx) =>
                 <div key={idx} className='p-2 text-blue-900 dark:text-blue-200 cursor-pointer hover:bg-gray-200 hover:dark:bg-gray-800' onClick={()=>{
