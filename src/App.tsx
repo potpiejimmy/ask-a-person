@@ -42,6 +42,7 @@ function App() {
   let groupId = searchParams.get('group');
 
   let availablePersons: { [key: string]: { name: string; info: string, partei: string } } = {};
+  let availableSuggestions: string[] = [];
   const personContext: { [key: string]: PersonContext } = {};
   const setPersonContext: { [key: string]: React.Dispatch<React.SetStateAction<PersonContext>> } = {};
 
@@ -54,6 +55,8 @@ function App() {
         partei: "Unternehmer"
       }
     };
+
+    availableSuggestions = [];
 
   } else {
 
@@ -89,6 +92,63 @@ function App() {
         partei: "BSW"
       }
     };
+
+    availableSuggestions = [
+      "Welche drei konkreten Maßnahmen wollen Sie als erstes umsetzen, um den CO2-Ausstoß in Deutschland zu senken?",
+      "Soll der Atomausstieg überdacht werden, um die Energiewende abzusichern?",
+      "Wollen Sie den Mindestlohn weiter erhöhen, und wenn ja, auf welchen Betrag?",
+      "Welche Maßnahmen planen Sie, um Schulen besser digital auszustatten?",
+      "Wie wollen Sie die deutsche Wirtschaft krisenfest machen?",
+      "Unterstützen Sie eine Mietpreisbremse, und wie effektiv ist diese Ihrer Meinung nach?",
+      "Wie stehen Sie zu einer gerechteren Verteilung von Geflüchteten innerhalb der EU?",
+      "Wie garantieren Sie flächendeckendes Glasfaser-Internet bis 2030?",
+      "Wie wollen Sie das Verhältnis Deutschlands zu den USA und China in Einklang bringen?",
+      "Wie stehen Sie zur Einführung einer höheren CO2-Bepreisung, und wie soll diese sozial abgefedert werden?",
+      "Welche Rolle sehen Sie für die deutsche Industrie im Klimaschutz, und wie wollen Sie diese unterstützen?",
+      "Planen Sie Verbote wie das Aus für Verbrennungsmotoren oder eher Anreize für klimafreundliche Technologien?",
+      "Wie garantieren Sie, dass Deutschland nicht seine Klimaziele durch den Import von „dreckigen“ Produkten aus dem Ausland verfehlt?",
+      "Wie wollen Sie den Ausbau von Wind- und Solarenergie beschleunigen?",
+      "Was planen Sie, um den steigenden Strombedarf durch Elektromobilität und Digitalisierung zu decken?",
+      "Wie wollen Sie die Abhängigkeit Deutschlands von fossilen Energieimporten wie Gas oder Öl verringern?",
+      "Wie garantieren Sie, dass Energie für Bürger und Unternehmen bezahlbar bleibt?",
+      "Welche Maßnahmen planen Sie gegen Kinderarmut in Deutschland?",
+      "Wie wollen Sie bezahlbare Gesundheitsversorgung für alle sichern?",
+      "Welche Schritte wollen Sie unternehmen, um prekäre Arbeitsverhältnisse wie Befristungen oder Leiharbeit einzuschränken?",
+      "Wie wollen Sie die Renten stabilisieren, ohne die junge Generation zu überlasten?",
+      "Wie wollen Sie den Lehrermangel in Deutschland kurzfristig und langfristig lösen?",
+      "Sind Sie für die Einführung bundesweit einheitlicher Bildungsstandards?",
+      "Was wollen Sie tun, um Kinder aus sozial schwachen Familien gezielt zu fördern?",
+      "Wie soll berufliche Bildung im Zeitalter der Digitalisierung gestärkt werden?",
+      "Welche Maßnahmen planen Sie, um kleine und mittelständische Unternehmen zu entlasten?",
+      "Welche Branchen sehen Sie als zentral für die Zukunft, und wie wollen Sie diese fördern?",
+      "Sind Sie für oder gegen eine Vermögenssteuer, um öffentliche Investitionen zu finanzieren?",
+      "Wie wollen Sie den Übergang von traditionellen Industrien zur klimafreundlichen Wirtschaft sozialverträglich gestalten?",
+      "Was wollen Sie tun, um den Bau von bezahlbarem Wohnraum zu beschleunigen?",
+      "Sollen Bauvorschriften gelockert werden, um Wohnungsbau zu erleichtern?",
+      "Wie wollen Sie Leerstand in Städten bekämpfen?",
+      "Planen Sie eine stärkere Förderung von genossenschaftlichem oder sozialem Wohnungsbau?",
+      "Welche Maßnahmen planen Sie, um Fachkräfte aus dem Ausland besser nach Deutschland zu holen?",
+      "Wie wollen Sie Integration in Schulen und auf dem Arbeitsmarkt fördern?",
+      "Soll es ein vereinfachtes Einwanderungsgesetz geben, und wie könnte es aussehen?",
+      "Wie wollen Sie die Balance zwischen humanitärer Aufnahme und der Kontrolle von Zuwanderung gewährleisten?",
+      "Was wollen Sie tun, um die digitale Verwaltung endlich voranzubringen?",
+      "Wie stehen Sie zur Besteuerung von Tech-Konzernen, die in Deutschland Milliarden verdienen?",
+      "Wie fördern Sie digitale Kompetenzen in Schulen und der Arbeitswelt?",
+      "Was planen Sie, um Datenschutz und IT-Sicherheit in einer vernetzten Gesellschaft zu gewährleisten?",
+      "Wie wollen Sie den Fachkräftemangel in der Pflege und bei Ärzten bekämpfen?",
+      "Unterstützen Sie eine Reform der privaten und gesetzlichen Krankenversicherung, und wie soll diese aussehen?",
+      "Wie wollen Sie die psychische Gesundheit stärker in die Gesundheitsversorgung integrieren?",
+      "Was planen Sie, um lange Wartezeiten bei Fachärzten zu reduzieren?",
+      "Wie stehen Sie zur Einführung eines staatlich regulierten Arzneimittelpreises?",
+      "Welche konkreten Vorschläge haben Sie zur Stärkung der EU und ihrer Handlungsfähigkeit?",
+      "Soll Deutschland eine aktivere Rolle in internationalen Friedensmissionen spielen?",
+      "Wie wollen Sie die europäische Abhängigkeit von China in Schlüsselbereichen reduzieren?",
+      "Sind Sie für eine Erhöhung der Verteidigungsausgaben im Rahmen der NATO-Ziele?",
+      "Wie wollen Sie die EU besser gegen Cyberangriffe und Desinformation schützen?",
+      "Wie kann illegale Migration effektiv bekämpft werden?",
+      "Wie wollen Sie die EU-Beitrittsverhandlungen mit der Türkei und anderen Ländern gestalten?",
+      "Wollen Sie straffällige Migranten schneller abschieben, und wie soll das funktionieren?",
+    ];
   }
 
   // us2024
@@ -108,8 +168,17 @@ function App() {
   const [warningMessage, setWarningMessage] = React.useState<string>("");
   const [acceptedQuestion, setAcceptedQuestion] = React.useState<string>("");
   const [checkResult, setCheckResult] = React.useState<string>("");
+  const [suggestionsVisible, setSuggestionsVisible] = React.useState<boolean>(false);
 
   let api = new AskAPi();
+
+  function filteredSuggestions(): string[] {
+    if (question.trim().length === 0) return availableSuggestions;
+    let terms = question.trim().split(/\s+/);
+    let filtered = availableSuggestions.filter(s => terms.some(word => s.toLowerCase().includes(word.toLowerCase())));
+    if (filtered.length === 0) return availableSuggestions;
+    return filtered;
+  }
 
   async function askCheckBot(question: string): Promise<{answer: string}> {
     if (DUMMY_RESPONSES) {
@@ -149,6 +218,7 @@ function App() {
     if (event.key === 'Enter') {
       event.preventDefault();
       if (isAnythingLoading()) return;
+      setSuggestionsVisible(false);
       checkQuestion();
     }
   }
@@ -251,12 +321,35 @@ function App() {
         </div>
       </div>
 
-      <div className="flex flex-row gap-3 items-center">
-        <p className="grow input-container">
-          <textarea readOnly={isAnythingLoading()} autoFocus onKeyDown={onkeydown} value={question} onChange={e=>setQuestion(e.target.value)}
-                 name="text" id="question" className="input" placeholder="Gib hier deine Frage ein"></textarea>
-        </p>
-        {loading && <IoHourglassOutline size={40}/>}
+      <div className="flex flex-col">
+        <div className="flex flex-row gap-3 items-center">
+          <p className="grow input-container">
+            <textarea readOnly={isAnythingLoading()} autoFocus onKeyDown={onkeydown} value={question} onChange={e=>setQuestion(e.target.value)}
+                  name="text" id="question" className="input" placeholder="Gib hier deine Frage ein"
+                  onFocus={()=>setSuggestionsVisible(true)}></textarea>
+          </p>
+          {loading && <IoHourglassOutline size={40}/>}
+        </div>
+        {suggestionsVisible && availableSuggestions.length > 0 && !isAnythingLoading() &&
+          <div className='p-2 border border-gray-300 dark:border-gray-700 h-40 overflow-y-scroll'>
+            <div className='flex flex-col'>
+              <div className='p-2'>
+                Oder wähle eine Frage aus (du kannst auch nach Stichpunkten filtern):
+              </div>
+              {filteredSuggestions().map((suggestion, idx) =>
+                <div key={idx} className='p-2 text-blue-900 dark:text-blue-200 cursor-pointer hover:bg-gray-200 hover:dark:bg-gray-800' onClick={()=>{
+                    setSuggestionsVisible(false);
+                    setQuestion("");
+                    setAcceptedQuestion(suggestion);
+                    performQuestionToAll(suggestion);
+                  }}>
+                  <div className='flex flex-row items-center gap-2'>
+                    <div>{suggestion}</div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>}
       </div>
 
       {checkResult.length > 0 && !loading && !isQuestionValid() && <div className="text-red-700 dark:text-red-300">Die eingegebene Frage ist leider nicht gültig.</div>}
