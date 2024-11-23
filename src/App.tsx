@@ -40,6 +40,13 @@ function App() {
   };
 
   const [ searchParams ] = useSearchParams();
+
+  let clientId = searchParams.get('client');
+  if (clientId) localStorage.setItem("clientId", clientId);
+  if (localStorage.getItem("clientId") === null) {
+    localStorage.setItem("clientId", Math.random().toString(36).substring(2));
+  }
+
   let groupId = searchParams.get('group');
 
   let availablePersons: { [key: string]: { name: string; info: string, partei: string } } = {};
