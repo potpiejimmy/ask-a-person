@@ -6,4 +6,8 @@ export default class AskApi extends HttpBase {
         return this.post("/ask", { person, question, history, clientid: localStorage.getItem("clientId") });
     }
 
+    async getHistory(): Promise<any> {
+        return this.get("/history");
+    }
+
 }
