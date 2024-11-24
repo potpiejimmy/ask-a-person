@@ -116,15 +116,16 @@ function App() {
     };
 
     availableSuggestions = [
-      "Welche drei konkreten Maßnahmen wollen Sie als erstes umsetzen, um den CO2-Ausstoß in Deutschland zu senken?",
+      "Welche drei Maßnahmen würden Sie als erstes als Bundeskanzler umsetzen? Bitte kurz antworten.",
       "Soll der Atomausstieg überdacht werden, um die Energiewende abzusichern?",
-      "Wollen Sie den Mindestlohn weiter erhöhen, und wenn ja, auf welchen Betrag?",
       "Welche Maßnahmen planen Sie, um Schulen besser digital auszustatten?",
       "Wie wollen Sie die deutsche Wirtschaft krisenfest machen?",
       "Unterstützen Sie eine Mietpreisbremse, und wie effektiv ist diese Ihrer Meinung nach?",
       "Wie stehen Sie zu einer gerechteren Verteilung von Geflüchteten innerhalb der EU?",
       "Wie garantieren Sie flächendeckendes Glasfaser-Internet bis 2030?",
       "Wie wollen Sie das Verhältnis Deutschlands zu den USA und China in Einklang bringen?",
+      "Wollen Sie den Mindestlohn weiter erhöhen, und wenn ja, auf welchen Betrag?",
+      "Welche drei konkreten Maßnahmen wollen Sie als erstes umsetzen, um den CO2-Ausstoß in Deutschland zu senken?",
       "Wie stehen Sie zur Einführung einer höheren CO2-Bepreisung, und wie soll diese sozial abgefedert werden?",
       "Welche Rolle sehen Sie für die deutsche Industrie im Klimaschutz, und wie wollen Sie diese unterstützen?",
       "Planen Sie Verbote wie das Aus für Verbrennungsmotoren oder eher Anreize für klimafreundliche Technologien?",
