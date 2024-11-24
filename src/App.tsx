@@ -51,11 +51,13 @@ function App() {
 
   let availablePersons: { [key: string]: { name: string; info: string, partei: string } } = {};
   let availableSuggestions: string[] = [];
+  let introText = "";
   const personContext: { [key: string]: PersonContext } = {};
   const setPersonContext: { [key: string]: React.Dispatch<React.SetStateAction<PersonContext>> } = {};
 
   if (groupId === "us2024") {
 
+    introText = "Hier sind einige interessante Personen aus den USA, die du befragen kannst. Wähle einfach eine Person aus und stelle deine Frage auf deutsch oder auf englisch. Viel Spaß!";
     availablePersons = {
       "musk": {
         name: "Elon Musk",
@@ -64,10 +66,22 @@ function App() {
       }
     };
 
-    availableSuggestions = [];
+    availableSuggestions = [
+      "Was sind Ihre größten Hoffnungen und Ängste hinsichtlich der Entwicklung von künstlicher Intelligenz, und wie könnte die Menschheit Ihrer Meinung nach sicherstellen, dass KI uns nützt, anstatt uns zu gefährden?",
+      "Welche Herausforderungen bei der Kolonisierung des Mars betrachten Sie als am schwierigsten zu lösen: die technischen, die biologischen oder die gesellschaftlichen?",
+      "Wie stellen Sie sich die Zukunft des autonomen Fahrens vor, und was sind Ihrer Meinung nach die größten Hürden, bevor diese Technologie weltweit akzeptiert wird?",
+      "Gibt es eine Technologie oder einen Ansatz zur Energiegewinnung, den die Öffentlichkeit derzeit unterschätzt, aber Ihrer Meinung nach das Potenzial hat, die Welt zu verändern?",
+      "Bei all Ihren Projekten und Ihrem enormen Arbeitspensum: Wie priorisieren Sie Ihre Zeit und vermeiden Burnout?",
+      "Wie sollte Ihrer Meinung nach das internationale Weltraumrecht in einer Ära privater Raumfahrtunternehmen weiterentwickelt werden, um fairen Zugang und Frieden im Weltraum zu gewährleisten?",
+      "Wie gehen Sie mit der Verantwortung um, dass Ihre Technologien (Tesla, SpaceX, Neuralink) das Potenzial haben, die Gesellschaft radikal zu verändern, sowohl positiv als auch negativ?",
+      "Was sind Ihrer Meinung nach die ethischen Grenzen der Gehirn-Computer-Schnittstellen, und wie planen Sie, diese Grenzen zu respektieren?",
+      "Wie fördern Sie Innovation in Ihren Teams, und welche Rolle spielt Ihrer Meinung nach die Risikobereitschaft bei disruptiven Technologien?",
+      "Was ist das ultimative Ziel Ihrer verschiedenen Unternehmungen? Gibt es eine übergreifende Vision, die all Ihre Projekte miteinander verbindet?",
+    ];
 
   } else {
 
+    introText = "Bald sind Wahlen in Deutschland. Hier kannst du dich auf eine völlig neue Art und Weise informieren, ohne stundenlange Interviews oder Fernsehsendungen ansehen zu müssen. Stelle einfach deine Fragen direkt an die Spitzenkandidaten der Parteien und führe ein Gespräch mit ihnen.";
     availablePersons = {
       "merz": {
         name: "Friedrich Merz",
@@ -324,8 +338,7 @@ function App() {
       <div className="flex flex-row gap-3">
         <img src="/logo192.png" alt="Logo" className="w-16 h-16"/>
         <div className='text-xl'>
-          Bald sind Wahlen in Deutschland. Hier kannst du dich auf eine völlig neue Art und Weise informieren, ohne stundenlange Interviews oder Fernsehsendungen ansehen zu müssen.
-          Stelle einfach deine Fragen direkt an die Spitzenkandidaten der Parteien und führe ein Gespräch mit ihnen.
+          {introText}
         </div>
       </div>
 
@@ -368,7 +381,7 @@ function App() {
       {checkResult.length > 0 && !loading && !isQuestionValid() && <div className="text-red-700 dark:text-red-300">Die eingegebene Frage ist leider nicht gültig.</div>}
       {warningMessage.length>0 && <div className="text-red-700 dark:text-red-300">{warningMessage}</div>}
 
-      <div className='text-lg'>Wähle aus, an wen du die Frage stellen möchtest. Du kannst mehrere Politiker auswählen und dann die Antworten vergleichen:</div>
+      <div className='text-lg'>Wähle aus, an wen du die Frage stellen möchtest. Du kannst mehrere Personen auswählen und dann die Antworten vergleichen:</div>
       <div className="flex flex-row gap-3 flex-wrap">
         {Object.keys(availablePersons).map((key) => (
           <div key={key} className='grow basis-0 min-w-40'>
