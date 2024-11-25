@@ -380,6 +380,7 @@ function App() {
 
             {ctx.history && ctx.history.length > 0 && ctx.history.map((item, idx) => (
                   <div key={idx} className="flex flex-col gap-2">
+                    <div ref={bottomAnchor}></div>
                     <div className="font-bold">Deine Frage:</div>
                     <div>{item.question}</div>
                     <PoweredBy name={availablePersons[key].name}/>
@@ -398,7 +399,6 @@ function App() {
           </div>
         ))}
       </div>
-      <div ref={bottomAnchor}></div>
     </div>
   );
 }
