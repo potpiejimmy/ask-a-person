@@ -303,17 +303,17 @@ function App() {
         <div className="flex flex-row gap-3 items-center">
           <p className="grow input-container">
             <textarea readOnly={isAnythingLoading()} autoFocus onKeyDown={onkeydown} value={question} onChange={e=>setQuestion(e.target.value)}
-                  name="text" id="question" className="input" placeholder="Gib hier deine Frage ein"
-                  onFocus={()=>setSuggestionsVisible(true)}></textarea>
+                  name="text" id="question" className="input" placeholder="Gib hier deine Frage ein"></textarea>
           </p>
           {loading && <IoHourglassOutline size={40}/>}
         </div>
+        {!suggestionsVisible && availableSuggestions.length > 0 && !isAnythingLoading() && <a href="/" className='text-blue-800 dark:text-blue-300' onClick={event=>{setSuggestionsVisible(true); event.preventDefault();}}>Vorschläge für Fragen anzeigen ➤</a>}
         {suggestionsVisible && availableSuggestions.length > 0 && !isAnythingLoading() &&
-          <div className='p-2 border border-gray-300 dark:border-gray-700 h-40 overflow-y-scroll'>
+          <div className='p-2 border border-gray-300 dark:border-gray-700 h-60 overflow-y-scroll'>
             <div className='flex flex-col'>
               <div className='flex flex-row'>
                 <div className='p-2 grow'>
-                  Oder wähle eine Frage aus (du kannst auch nach Stichpunkten filtern):
+                  Wähle eine Frage aus (du kannst im Eingabefeld nach Stichpunkten filtern):
                 </div>
                 <div>
                   <IoClose size={20} className='cursor-pointer' onClick={()=>setSuggestionsVisible(false)}/>
