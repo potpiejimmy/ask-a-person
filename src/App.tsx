@@ -7,6 +7,7 @@ import { IoClose } from "react-icons/io5";
 import Disclaimer from './components/Disclaimer';
 import PoweredBy from './components/PoweredBy';
 import { useSearchParams } from 'react-router-dom';
+import { ThreeDot } from 'react-loading-indicators';
 
 interface PersonContext {
   checked: boolean;
@@ -223,7 +224,7 @@ function App() {
   }
 
   async function performQuestion(person: string, question: string) {
-      setPersonContext[person]({...personContextDefault, checked: true, loading: true, response: "..."});
+      setPersonContext[person]({...personContextDefault, checked: true, loading: true, response: ""});
 
       try {
         let response = await api.ask(DUMMY_RESPONSES ? "dummy" : person, question);
@@ -248,7 +249,7 @@ function App() {
 
         setPersonContext[key]({...personContext[key], loading: true, followup: "", warning: "", history: [...(personContext[key].history || []), {
           question: q,
-          response: "..."
+          response: ""
         }]});
         scrollToBottom();
 
@@ -371,6 +372,8 @@ function App() {
             <div className="whitespace-pre-line">
               {ctx.response}
             </div>
+
+            {!ctx.history && ctx.loading && <ThreeDot color="#aaa" size="medium" text="" textColor="" />}
             
             {!ctx.history && !ctx.loading && acceptedQuestion.length > 0 && personContext[key].response.length > 0 &&
               <div>
@@ -385,6 +388,7 @@ function App() {
                     <div>{item.question}</div>
                     <PoweredBy name={availablePersons[key].name}/>
                     <div className="whitespace-pre-line">{item.response}</div>
+                    {ctx.loading && ctx.history && idx === ctx.history.length-1 && <ThreeDot color="#aaa" size="medium" text="" textColor="" />}
                   </div>
                 ))
             }
