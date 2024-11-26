@@ -297,7 +297,7 @@ function App() {
 
       <div className="flex flex-row gap-3">
         <img src="/logo192.png" alt="Logo" className="w-16 h-16"/>
-        <div className='text-xl'>
+        <div className='text-lg'>
           {introText}
         </div>
       </div>
