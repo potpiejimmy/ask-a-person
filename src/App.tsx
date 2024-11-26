@@ -8,19 +8,22 @@ import Disclaimer from './components/Disclaimer';
 import PoweredBy from './components/PoweredBy';
 import { useSearchParams } from 'react-router-dom';
 import { ThreeDot } from 'react-loading-indicators';
+import ResponseMsg from './components/ResponseMsg';
 
 interface PersonContext {
   checked: boolean;
   loading: boolean;
   response: string;
+  insufficient: boolean;
   followup: string;
   warning: string;
-  history?: { question?: string, response?: string }[];
+  history?: { question?: string, response?: string, insufficient: boolean }[];
 }
 
 const DUMMY_RESPONSES = false;
 
 const GENERIC_ERROR_MESSAGE = "Das hat leider ich nicht geklappt. Die Anzahl der Aufrufe pro Minute ist beschränkt. Bitte versuche es erneut.";
+const INSUFFICIENT_INFORMATION = "Dazu habe ich momentan keine ausreichenden Informationen.";
 
 function App() {
 
@@ -36,6 +39,7 @@ function App() {
     checked: false,
     loading: false,
     response: "",
+    insufficient: false,
     followup: "",
     warning: ""
   };
@@ -118,7 +122,7 @@ function App() {
 
     availableSuggestions = [
       "Welche drei Maßnahmen würden Sie als erstes als Bundeskanzler umsetzen? Bitte kurz antworten.",
-      "Wie wollen Sie sicherstellen, dass Deutschland seine Klimaziele für 2030 erreicht, und welche Maßnahmen priorisieren Sie dabei?",
+      "Wie wollen Sie sicherstellen, dass Deutschland seine Klimaziele für 2030 erreicht?",
       "Wie planen Sie den Übergang zu erneuerbaren Energien voranzutreiben und gleichzeitig die Energieversorgung sicher und bezahlbar zu halten?",
       "Welche konkreten Schritte schlagen Sie vor, um die Kluft zwischen Arm und Reich in Deutschland zu verringern?",
       "Was wollen Sie tun, um die Qualität und Chancengleichheit im deutschen Bildungssystem zu verbessern?",
@@ -229,7 +233,7 @@ function App() {
       try {
         let response = await api.ask(DUMMY_RESPONSES ? "dummy" : person, question);
 
-        setPersonContext[person]({...personContextDefault, checked: true, loading: false, response: response.answer});
+        setPersonContext[person]({...personContextDefault, checked: true, loading: false, response: response.answer, insufficient: response.answer.startsWith(INSUFFICIENT_INFORMATION)});
         scrollToQuestion();
       } catch (e) {
         console.error(e);
@@ -248,7 +252,8 @@ function App() {
 
         setPersonContext[key]({...personContext[key], loading: true, followup: "", warning: "", history: [...(personContext[key].history || []), {
           question: q,
-          response: ""
+          response: "",
+          insufficient: false
         }]});
         scrollToBottom();
 
@@ -258,7 +263,8 @@ function App() {
         ]);
         setPersonContext[key]({...personContext[key], loading: false, followup: "", warning: "", history: [...(personContext[key].history || []), {
           question: q,
-          response: res.answer
+          response: res.answer,
+          insufficient: res.answer.startsWith(INSUFFICIENT_INFORMATION)
         }]});
       } else {
         setPersonContext[key]({...personContext[key], warning: "Die eingegebene Frage ist leider nicht gültig."});
@@ -369,9 +375,7 @@ function App() {
 
             <PoweredBy name={availablePersons[key].name}/>
             
-            <div className="whitespace-pre-line">
-              {ctx.response}
-            </div>
+            <ResponseMsg response={ctx.response} insufficient={ctx.insufficient} insufficientMsg={INSUFFICIENT_INFORMATION}/>
 
             {!ctx.history && ctx.loading && <ThreeDot color="#aaa" size="medium" text="" textColor="" />}
             
@@ -387,7 +391,7 @@ function App() {
                     <div className="font-bold">Deine Frage:</div>
                     <div>{item.question}</div>
                     <PoweredBy name={availablePersons[key].name}/>
-                    <div className="whitespace-pre-line">{item.response}</div>
+                    <ResponseMsg response={item.response || ''} insufficient={item.insufficient} insufficientMsg={INSUFFICIENT_INFORMATION}/>
                     {ctx.loading && ctx.history && idx === ctx.history.length-1 && <ThreeDot color="#aaa" size="medium" text="" textColor="" />}
                   </div>
                 ))
