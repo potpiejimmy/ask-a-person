@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import History from './routes/History';
+import About from './routes/About';
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
   {
     path: "/history",
     element: <History/>,
+  },
+  {
+    path: "/about",
+    element: <About/>,
   }
 ]);
 

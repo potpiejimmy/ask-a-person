@@ -6,7 +6,7 @@ import { IoHourglassOutline } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
 import Disclaimer from './components/Disclaimer';
 import PoweredBy from './components/PoweredBy';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { ThreeDot } from 'react-loading-indicators';
 import ResponseMsg from './components/ResponseMsg';
 
@@ -405,6 +405,14 @@ function App() {
             {personContext[key].warning.length > 0 && <div className="text-red-700 dark:text-red-300">{personContext[key].warning}</div>}
           </div>
         ))}
+      </div>
+
+      <div className='flex flex-col gap-2 mt-10'>
+        <hr></hr>
+        <div className='flex flex-row gap-5'>
+          <Link to="/about">Impressum</Link>
+          <a href="/privacy.html">Datenschutzerklärung</a>
+        </div>
       </div>
     </div>
   );
