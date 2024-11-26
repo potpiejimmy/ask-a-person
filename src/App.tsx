@@ -302,6 +302,22 @@ function App() {
         </div>
       </div>
 
+      <Disclaimer onClick={()=>{}} closeable={false} insufficientMsg={INSUFFICIENT_INFORMATION}/>
+
+      <div className='text-lg'>Wähle aus, an wen du die Frage stellen möchtest. Du kannst mehrere Personen auswählen und dann die Antworten vergleichen:</div>
+      <div className="flex flex-row gap-3 flex-wrap">
+        {Object.keys(availablePersons).map((key) => (
+          <div key={key} className='grow basis-0 min-w-40'>
+            <Checkbox id={key} disabled={personContext[key].loading}
+                    label={availablePersons[key].name}
+                    info={availablePersons[key].info}
+                    subInfo={availablePersons[key].partei}
+                    checked={personContext[key].checked}
+                    onChange={checked => personSelected(key, checked)}/>
+          </div>
+        ))}
+      </div>
+
       <div className="flex flex-col">
         <div className="flex flex-row gap-3 items-center">
           <p className="grow input-container">
@@ -341,22 +357,6 @@ function App() {
 
       {checkResult.length > 0 && !loading && !isQuestionValid() && <div className="text-red-700 dark:text-red-300">Die eingegebene Frage ist leider nicht gültig.</div>}
       {warningMessage.length>0 && <div className="text-red-700 dark:text-red-300">{warningMessage}</div>}
-
-      <div className='text-lg'>Wähle aus, an wen du die Frage stellen möchtest. Du kannst mehrere Personen auswählen und dann die Antworten vergleichen:</div>
-      <div className="flex flex-row gap-3 flex-wrap">
-        {Object.keys(availablePersons).map((key) => (
-          <div key={key} className='grow basis-0 min-w-40'>
-            <Checkbox id={key} disabled={personContext[key].loading}
-                    label={availablePersons[key].name}
-                    info={availablePersons[key].info}
-                    subInfo={availablePersons[key].partei}
-                    checked={personContext[key].checked}
-                    onChange={checked => personSelected(key, checked)}/>
-          </div>
-        ))}
-      </div>
-
-      <Disclaimer onClick={()=>{}} closeable={false} insufficientMsg={INSUFFICIENT_INFORMATION}/>
 
       {acceptedQuestion.length > 0 && 
         <div ref={questionAnchor} className='responseCard p-5 flex flex-col gap-2'>
