@@ -20,7 +20,7 @@ interface PersonContext {
 
 const DUMMY_RESPONSES = false;
 
-const GENERIC_ERROR_MESSAGE = "Das hat leider ich nicht geklappt. Bitte versuche es erneut.";
+const GENERIC_ERROR_MESSAGE = "Das hat leider ich nicht geklappt. Die Anzahl der Aufrufe pro Minute ist beschränkt. Bitte versuche es erneut.";
 
 function App() {
 
@@ -233,8 +233,7 @@ function App() {
         scrollToQuestion();
       } catch (e) {
         console.error(e);
-        setWarningMessage(GENERIC_ERROR_MESSAGE);
-        setPersonContext[person]({...personContextDefault, checked: true, loading: false, response: ""});
+        setPersonContext[person]({...personContextDefault, checked: true, loading: false, response: "", warning: GENERIC_ERROR_MESSAGE});
       }
   }
 
@@ -324,6 +323,7 @@ function App() {
                 <div key={idx} className='p-2 text-blue-900 dark:text-blue-200 cursor-pointer hover:bg-gray-200 hover:dark:bg-gray-800' onClick={()=>{
                     setSuggestionsVisible(false);
                     setQuestion("");
+                    setWarningMessage("");
                     setAcceptedQuestion(suggestion);
                     performQuestionToAll(suggestion);
                   }}>
@@ -397,9 +397,9 @@ function App() {
               <div>
                 <textarea readOnly={personContext[key].loading} autoFocus onKeyDown={e=>followUpKeyDown(key, e)} value={personContext[key].followup} onChange={e => setPersonContext[key]({...personContext[key], followup: e.target.value})}
                       name="text" id="question" className="input" placeholder="Gib hier deine Folgefrage ein"></textarea>
-                {personContext[key].warning.length > 0 && <div className="text-red-700 dark:text-red-300">{personContext[key].warning}</div>}
               </div>
             }
+            {personContext[key].warning.length > 0 && <div className="text-red-700 dark:text-red-300">{personContext[key].warning}</div>}
           </div>
         ))}
       </div>
