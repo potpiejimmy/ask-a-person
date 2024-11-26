@@ -146,7 +146,6 @@ function App() {
   [personContext["lindner"], setPersonContext["lindner"]] = React.useState<PersonContext>(personContextDefault);
   [personContext["wagenknecht"], setPersonContext["wagenknecht"]] = React.useState<PersonContext>(personContextDefault);
 
-  const [disclaimerDismissed, setDisclaimerDismissed] = React.useState<boolean>(false);
   const [question, setQuestion] = React.useState<string>("");
   const [loading, setLoading] = React.useState<boolean>(false);
   const [warningMessage, setWarningMessage] = React.useState<string>("");
@@ -296,8 +295,6 @@ function App() {
 
       {DUMMY_RESPONSES && <div className="text-red-700 dark:text-red-300">Dummy responses are enabled</div>}
 
-      {!disclaimerDismissed && <Disclaimer onClick={()=>setDisclaimerDismissed(true)}/>}
-
       <div className="flex flex-row gap-3">
         <img src="/logo192.png" alt="Logo" className="w-16 h-16"/>
         <div className='text-xl'>
@@ -313,7 +310,7 @@ function App() {
           </p>
           {loading && <IoHourglassOutline size={40}/>}
         </div>
-        {!suggestionsVisible && availableSuggestions.length > 0 && !isAnythingLoading() && <a href="/" className='text-blue-800 dark:text-blue-300' onClick={event=>{setSuggestionsVisible(true); event.preventDefault();}}>Vorschläge für Fragen anzeigen ➤</a>}
+        {!suggestionsVisible && availableSuggestions.length > 0 && !isAnythingLoading() && <a href="/" className='text-blue-800 dark:text-blue-300' onClick={event=>{setSuggestionsVisible(true); event.preventDefault();}}>Zeige mir Vorschläge für Fragen an ➤</a>}
         {suggestionsVisible && availableSuggestions.length > 0 && !isAnythingLoading() &&
           <div className='p-2 border border-gray-300 dark:border-gray-700 h-60 overflow-y-scroll'>
             <div className='flex flex-col'>
@@ -358,6 +355,8 @@ function App() {
           </div>
         ))}
       </div>
+
+      <Disclaimer onClick={()=>{}} closeable={false} insufficientMsg={INSUFFICIENT_INFORMATION}/>
 
       {acceptedQuestion.length > 0 && 
         <div ref={questionAnchor} className='responseCard p-5 flex flex-col gap-2'>

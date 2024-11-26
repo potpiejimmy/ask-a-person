@@ -17,13 +17,13 @@
 }
 
 .alertcard-heading {
-    font-size: 1em;
+    font-size: .9em;
     font-weight: 800;
     color: rgb(49, 49, 49);
 }
 
 .alertcard-content {
-    font-size: 0.95em;
+    font-size: 0.85em;
     font-weight: 500;
     color: rgb(49, 49, 49);
 }
@@ -66,6 +66,14 @@
 
 @media (prefers-color-scheme: dark) {
     .alertcard {
-        background: #dfcba3;
+        background: #2d2b27;
+    }
+
+    .alertcardOuter {
+        background-color: #46443e;
+    }
+
+    .alertcard-heading, .alertcard-content {
+        color: rgb(220, 220, 220);
     }
 }
