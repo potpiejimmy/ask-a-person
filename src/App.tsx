@@ -299,7 +299,7 @@ function App() {
       <div className="flex flex-row gap-5 items-center">
         <img src="/logo192.png" alt="Logo" className="w-14 h-14"/>
         <div className='text-xl font-bold'>
-          Plauder.ai — Gespräche, die unmöglich schienen.<br/>
+          Plauder.ai — Sprich mit denen, die sonst unerreichbar sind.<br/>
           Virtuell. Persönlich. Faszinierend echt.
         </div>
       </div>
