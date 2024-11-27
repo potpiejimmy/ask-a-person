@@ -322,7 +322,7 @@ function App() {
       <div className="flex flex-col">
         <div className="flex flex-row gap-3 items-center">
           <p className="grow input-container">
-            <textarea readOnly={isAnythingLoading()} autoFocus onKeyDown={onkeydown} value={question} onChange={e=>setQuestion(e.target.value)}
+            <textarea readOnly={isAnythingLoading()} onKeyDown={onkeydown} value={question} onChange={e=>setQuestion(e.target.value)}
                   name="text" id="question" className="input" placeholder="Gib hier deine Frage ein"></textarea>
           </p>
           {loading && <IoHourglassOutline size={40}/>}
