@@ -17,6 +17,11 @@ export default function About() {
             info@plauder.ai
         </div>
 
+        <h2 className="text-lg font-bold">Lizenzen</h2>
+        <div>
+            Bildmaterial: <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons | CC BY-SA 4.0</a><br/>
+        </div>
+
         <div className='flex grow'/>
         <Footer/>
     </div>

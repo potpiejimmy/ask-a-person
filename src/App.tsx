@@ -55,7 +55,7 @@ function App() {
 
   let groupId = searchParams.get('group');
 
-  let availablePersons: { [key: string]: { name: string; info: string, partei: string } } = {};
+  let availablePersons: { [key: string]: { name: string; credit: string, partei: string } } = {};
   let availableSuggestions: string[] = [];
   let introText = "";
   const personContext: { [key: string]: PersonContext } = {};
@@ -67,7 +67,7 @@ function App() {
     availablePersons = {
       "musk": {
         name: "Elon Musk",
-        info: "https://x.com/elonmusk",
+        credit: "https://x.com/elonmusk",
         partei: "Unternehmer"
       }
     };
@@ -91,32 +91,32 @@ function App() {
     availablePersons = {
       "merz": {
         name: "Friedrich Merz",
-        info: "https://www.merz.cdu.de/",
+        credit: "Credit: Steffen Prößdorf | License: CC BY-SA 4.0",
         partei: "CDU"
       },
       "scholz": {
         name: "Olaf Scholz",
-        info: "https://olaf-scholz.spd.de/start",
+        credit: "Credit: Steffen Prößdorf | License: CC BY-SA 4.0",
         partei: "SPD"
       },
       "weidel": {
         name: "Alice Weidel",
-        info: "https://www.afd.de/alice-weidel",
+        credit: "Credit: Schlappal | License: CC BY-SA 4.0",
         partei: "AfD"
       },
       "habeck": {
         name: "Robert Habeck",
-        info: "https://www.gruene.de/leute/robert-habeck",
+        credit: "Credit: Stephan Röhl | License: CC BY-SA 4.0",
         partei: "Die Grünen"
       },
       "lindner": {
         name: "Christian Lindner",
-        info: "https://www.fdp.de/person/christian-lindner",
+        credit: "Credit: Sandro Halank | License: CC BY-SA 4.0",
         partei: "FDP"
       },
       "wagenknecht": {
         name: "Sahra Wagenknecht",
-        info: "https://bsw-vg.de/",
+        credit: "Credit: Raimond Spekking | License: CC BY-SA 4.0",
         partei: "BSW"
       }
     };
@@ -315,7 +315,7 @@ function App() {
           <div key={key} className='grow basis-0 min-w-40'>
             <Checkbox id={key} disabled={personContext[key].loading}
                     label={availablePersons[key].name}
-                    info={availablePersons[key].info}
+                    credit={availablePersons[key].credit}
                     subInfo={availablePersons[key].partei}
                     checked={personContext[key].checked}
                     onChange={checked => personSelected(key, checked)}/>

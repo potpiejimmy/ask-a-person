@@ -3,7 +3,7 @@ import "./Checkbox.css";
 interface CheckboxProps {
     id: string;
     label: string;
-    info: string;
+    credit: string;
     subInfo: string;
     disabled: boolean;
     checked: boolean;
@@ -17,7 +17,7 @@ export function Checkbox(props: CheckboxProps) {
             <div className="card">
                 <div className="flex flex-col gap-2 items-center">
                     <div>
-                        <img src={'/persons/' + props.id + '.jpg'} alt={props.label} className="rounded-full w-20 h-20"/>
+                        <img src={'/persons/' + props.id + '.jpg'} alt={props.label} title={props.credit} className="rounded-full w-20 h-20"/>
                     </div>
                     <div>
                         {props.label}
