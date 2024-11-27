@@ -6,7 +6,7 @@ import { IoHourglassOutline } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
 import Disclaimer from './components/Disclaimer';
 import PoweredBy from './components/PoweredBy';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { ThreeDot } from 'react-loading-indicators';
 import ResponseMsg from './components/ResponseMsg';
 import Footer from './components/Footer';
@@ -296,14 +296,18 @@ function App() {
 
       {DUMMY_RESPONSES && <div className="text-red-700 dark:text-red-300">Dummy responses are enabled</div>}
 
-      <div className="flex flex-row gap-3">
-        <img src="/logo192.png" alt="Logo" className="w-16 h-16"/>
-        <div className='text-lg'>
-          {introText}
+      <div className="flex flex-row gap-5 items-center">
+        <img src="/logo192.png" alt="Logo" className="w-14 h-14"/>
+        <div className='text-xl font-bold'>
+          Plauder.ai — Gespräche, die unmöglich schienen.<br/>
+          Virtuell. Persönlich. Faszinierend echt.
         </div>
       </div>
+      <div className='text-lg'>
+        {introText}
+      </div>
 
-      <Disclaimer onClick={()=>{}} closeable={false} insufficientMsg={INSUFFICIENT_INFORMATION}/>
+      <Disclaimer closeable={false} insufficientMsg={INSUFFICIENT_INFORMATION}/>
 
       <div className='text-lg'>Wähle aus, an wen du die Frage stellen möchtest. Du kannst mehrere Personen auswählen und dann die Antworten vergleichen:</div>
       <div className="flex flex-row gap-3 flex-wrap">

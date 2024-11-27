@@ -6,6 +6,9 @@
     align-items: center;
     justify-content: center;
     transition: all 0.3s;
+    border-radius: 1rem;
+    border-color:  #ffb700;
+    border-width: 2px;
 }
 
 .text-content {
@@ -56,21 +59,10 @@
     background-color: #eadaba;
 }
 
-.alertcardOuter {
-    content: "";
-    background-color: #ffb700;
-    padding: 4px;
-
-    transition: all 0.3s;
-}
-
 @media (prefers-color-scheme: dark) {
     .alertcard {
         background: #2d2b27;
-    }
-
-    .alertcardOuter {
-        background-color: #46443e;
+        border-color:  #46443e;
     }
 
     .alertcard-heading, .alertcard-content {
