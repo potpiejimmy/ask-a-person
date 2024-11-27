@@ -123,14 +123,13 @@ function App() {
 
     availableSuggestions = [
       "Welche drei Maßnahmen würden Sie als erstes als Bundeskanzler umsetzen? Bitte kurz antworten.",
-      "Wie wollen Sie sicherstellen, dass Deutschland seine Klimaziele für 2030 erreicht?",
-      "Wie planen Sie den Übergang zu erneuerbaren Energien voranzutreiben und gleichzeitig die Energieversorgung sicher und bezahlbar zu halten?",
-      "Welche konkreten Schritte schlagen Sie vor, um die Kluft zwischen Arm und Reich in Deutschland zu verringern?",
-      "Was wollen Sie tun, um die Qualität und Chancengleichheit im deutschen Bildungssystem zu verbessern?",
+      "Was sind die zentralen Punkte Ihrer Energie- und Klimapolitik?",
+      "Was wollen Sie dagegen tun, dass die Reichen immer reicher und die Armen immer ärmer werden in Deutschland?",
+      "Wie können wir unser Bildungssystem verbessern?",
       "Wie wollen Sie den Wirtschaftsstandort Deutschland stärken und Arbeitsplätze in einer zunehmend digitalen und globalisierten Welt sichern?",
       "Welche Maßnahmen planen Sie gegen die steigenden Miet- und Immobilienpreise in vielen deutschen Städten?",
       "Wie wollen Sie die Herausforderungen in der Asylpolitik angehen und gleichzeitig die Integration von Migrantinnen und Migranten fördern?",
-      "Was werden Sie tun, um die Digitalisierung in Deutschland voranzutreiben und digitale Infrastruktur zu verbessern?",
+      "Was möchten Sie zur Digitalisierung sagen?",
       "Wie wollen Sie das deutsche Gesundheitssystem nachhaltiger, effizienter und gerechter gestalten?",
       "Wie wollen Sie Deutschland in einer sich wandelnden geopolitischen Lage positionieren, insbesondere in Bezug auf die EU, die USA und China?",
     ];
