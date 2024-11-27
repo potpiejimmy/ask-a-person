@@ -9,6 +9,7 @@ import PoweredBy from './components/PoweredBy';
 import { Link, useSearchParams } from 'react-router-dom';
 import { ThreeDot } from 'react-loading-indicators';
 import ResponseMsg from './components/ResponseMsg';
+import Footer from './components/Footer';
 
 interface PersonContext {
   checked: boolean;
@@ -291,7 +292,7 @@ function App() {
   }
 
   return (
-    <div className="m-5 sm:m-10 flex flex-col gap-5">
+    <div className="h-full p-5 sm:p-10 flex flex-col gap-5">
 
       {DUMMY_RESPONSES && <div className="text-red-700 dark:text-red-300">Dummy responses are enabled</div>}
 
@@ -407,13 +408,9 @@ function App() {
         ))}
       </div>
 
-      <div className='flex flex-col gap-2 mt-10'>
-        <hr></hr>
-        <div className='flex flex-row gap-5'>
-          <Link to="/about">Impressum</Link>
-          <a href="/privacy.html">Datenschutzerklärung</a>
-        </div>
-      </div>
+      <div className='flex grow'/>
+      <Footer/>
+
     </div>
   );
 }
