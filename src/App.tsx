@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import AskAPi from './api/AskApi';
+import AskApi from './api/AskApi';
 import './App.css';
 import { Checkbox } from './components/Checkbox';
 import { IoHourglassOutline } from "react-icons/io5";
@@ -153,7 +153,7 @@ function App() {
   const [checkResult, setCheckResult] = React.useState<string>("");
   const [suggestionsVisible, setSuggestionsVisible] = React.useState<boolean>(false);
 
-  let api = new AskAPi();
+  let api = new AskApi();
 
   function filteredSuggestions(): string[] {
     if (question.trim().length === 0) return availableSuggestions;
@@ -198,7 +198,7 @@ function App() {
     return loading || Object.keys(personContext).some(key => personContext[key].loading);
   }
 
-  async function onkeydown(event: React.KeyboardEvent<HTMLTextAreaElement>) {
+  async function onMainQuestionInput(event: React.KeyboardEvent<HTMLTextAreaElement>) {
     if (event.key === 'Enter') {
       event.preventDefault();
       if (isAnythingLoading()) return;
@@ -207,7 +207,7 @@ function App() {
     }
   }
 
-  async function followUpKeyDown(key: string, event: React.KeyboardEvent<HTMLTextAreaElement>) {
+  async function onFollowupQuestionInput(key: string, event: React.KeyboardEvent<HTMLTextAreaElement>) {
     if (event.key === 'Enter') {
       event.preventDefault();
       if (personContext[key].loading) return;
@@ -325,7 +325,7 @@ function App() {
       <div className="flex flex-col">
         <div className="flex flex-row gap-3 items-center">
           <p className="grow input-container">
-            <textarea readOnly={isAnythingLoading()} onKeyDown={onkeydown} value={question} onChange={e=>setQuestion(e.target.value)}
+            <textarea readOnly={isAnythingLoading()} onKeyDown={onMainQuestionInput} value={question} onChange={e=>setQuestion(e.target.value)}
                   name="text" id="question" className="input" placeholder="Gib hier deine Frage ein"></textarea>
           </p>
           {loading && <IoHourglassOutline size={40}/>}
@@ -404,7 +404,7 @@ function App() {
 
             {ctx.history &&
               <div>
-                <textarea readOnly={personContext[key].loading} autoFocus onKeyDown={e=>followUpKeyDown(key, e)} value={personContext[key].followup} onChange={e => setPersonContext[key]({...personContext[key], followup: e.target.value})}
+                <textarea readOnly={personContext[key].loading} autoFocus onKeyDown={e=>onFollowupQuestionInput(key, e)} value={personContext[key].followup} onChange={e => setPersonContext[key]({...personContext[key], followup: e.target.value})}
                       name="text" id="question" className="input" placeholder="Gib hier deine Folgefrage ein"></textarea>
               </div>
             }
