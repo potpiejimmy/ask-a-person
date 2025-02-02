@@ -4,6 +4,7 @@ import './App.css';
 import { Checkbox } from './components/Checkbox';
 import { IoHourglassOutline } from "react-icons/io5";
 import { IoClose } from "react-icons/io5";
+import { IoSendOutline } from "react-icons/io5";
 import Disclaimer from './components/Disclaimer';
 import PoweredBy from './components/PoweredBy';
 import { useSearchParams } from 'react-router-dom';
@@ -174,6 +175,7 @@ function App() {
   async function checkQuestion() {
     if (question.trim().length === 0) return;
     setLoading(true);
+    setSuggestionsVisible(false);
     setWarningMessage("");
     setCheckResult("");
 
@@ -202,7 +204,6 @@ function App() {
     if (event.key === 'Enter') {
       event.preventDefault();
       if (isAnythingLoading()) return;
-      setSuggestionsVisible(false);
       checkQuestion();
     }
   }
@@ -328,6 +329,7 @@ function App() {
             <textarea readOnly={isAnythingLoading()} onKeyDown={onMainQuestionInput} value={question} onChange={e=>setQuestion(e.target.value)}
                   name="text" id="question" className="input" placeholder="Gib hier deine Frage ein"></textarea>
           </p>
+          {!loading && <IoSendOutline size={40} className='cursor-pointer' onClick={()=>checkQuestion()}/>}
           {loading && <IoHourglassOutline size={40}/>}
         </div>
         {!suggestionsVisible && availableSuggestions.length > 0 && !isAnythingLoading() && <a href="/" className='text-blue-800 dark:text-blue-300' onClick={event=>{setSuggestionsVisible(true); event.preventDefault();}}>Zeige mir Vorschläge für Fragen an ➤</a>}
